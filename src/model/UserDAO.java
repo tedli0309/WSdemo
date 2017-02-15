@@ -103,6 +103,7 @@ public class UserDAO extends GenericDAO<UserBean> {
         Transaction.commit();
         return users;
     }
+
 //    public String computeDigest(UserBean dbUser) {
 //    	String ans;
 //    	String s1 = String.valueOf(dbUser.getUserId());
@@ -122,4 +123,5 @@ public class UserDAO extends GenericDAO<UserBean> {
 //		
 //    	
 //    }
+
 }
