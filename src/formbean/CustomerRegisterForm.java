@@ -7,33 +7,43 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.mybeans.form.FormBean;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class CustomerRegisterForm extends FormBean{
-	private String userName;
-	private String firstName;
-	private String lastName;
-	private String addr1;
-	private String addr2;
+	@JsonProperty
+	private String fname;
+	@JsonProperty
+	private String lname;
+	@JsonProperty
+	private String address;
+	@JsonProperty
 	private String city;
+	@JsonProperty
 	private String state;
+	@JsonProperty
 	private String zip;
+	@JsonProperty
+	private String email;
+	@JsonProperty
+	private String cash;
+	@JsonProperty
+	private String username;
+	@JsonProperty
 	private String password;
-	private String confirmPassword;
 	
 	public void setUserName(String userName) {
-		this.userName =  trimAndConvert(userName,"<>\"");
+		this.username =  trimAndConvert(userName,"<>\"");
 	}
 	public void setFirstName(String firstName) {
-		this.firstName = trimAndConvert(firstName,"<>\"");
+		this.fname = trimAndConvert(firstName,"<>\"");
 	}
 	public void setLastName(String lastName) {
-		this.lastName = trimAndConvert(lastName,"<>\"");
+		this.lname = trimAndConvert(lastName,"<>\"");
 	}
-	public void setAddr1(String addr1) {
-		this.addr1 = trimAndConvert(addr1,"<>\"");
+	public void setAddress(String s) {
+		this.address = trimAndConvert(s,"<>\"");
 	}
-	public void setAddr2(String addr2) {
-		this.addr2 = trimAndConvert(addr2,"<>\"");
-	}
+
 	public void setCity(String city) {
 		this.city = trimAndConvert(city,"<>\"");
 	}
@@ -46,24 +56,21 @@ public class CustomerRegisterForm extends FormBean{
 	public void setPassword(String password) {
 		this.password = password.trim();
 	}
-	public void setConfirmPassword(String confirmPassword) {
-		this.confirmPassword = confirmPassword.trim();
+	public void setEmail(String s) {
+		this.email = email.trim();
 	}
 	
-	public String getUserName() {
-		return userName;
+	public String getUsername() {
+		return username;
 	}
-	public String getFirstName() {
-		return firstName;
+	public String getFname() {
+		return fname;
 	}
-	public String getLastName() {
-		return lastName;
+	public String getLname() {
+		return lname;
 	}
-	public String getAddr1() {
-		return addr1;
-	}
-	public String getAddr2() {
-		return addr2;
+	public String getAddress() {
+		return address;
 	}
 	public String getCity() {
 		return city;
@@ -77,41 +84,52 @@ public class CustomerRegisterForm extends FormBean{
 	public String getPassword() {
 		return password;
 	}
-	
+	public String getEmail() {
+		return email;
+	}
 	public List<String> getValidationErrors() {
 		//System.out.println(lastName.length());
 		List<String> errors = new ArrayList<String>();
-		if (userName == null || userName.length() == 0) {
+		if (username == null || username.length() == 0) {
 			errors.add("Email is required!");
 		}
-		if (lastName == null || lastName.length() == 0) {
+		if (lname == null || lname.length() == 0) {
 			errors.add("LastName is required!");
 		}
-		if (firstName == null || firstName.length() == 0) {
+		if (fname == null || fname.length() == 0) {
 			errors.add("FirstName is required!");
 		}
 		if (password == null || password.length() == 0) {
 			errors.add("password is required!");
 		}
-		if(!password.equals(confirmPassword)) {
-			errors.add("Passwords do not match");
+		if (email == null || email.length() == 0) {
+			errors.add("email is required");
 		}
-		
+		if (zip == null || zip.length() == 0) {
+			errors.add("zip is required");
+		}
+		if (address == null || address.length() == 0) {
+			errors.add("address is required");
+		}
+		if (state == null || state.length() == 0) {
+			errors.add("state is required");
+		}
+		if (city == null || city.length() == 0) {
+			errors.add("city is required");
+		}
 		if (errors.size() > 0) {
 			//System.out.println(errors.size());
 			return errors;
 		}
 		
-		if (userName.matches(".*[<>\"].*"))
+		if (username.matches(".*[<>\"].*"))
 			errors.add("UserName may not contain angle brackets or quotes");
-		if (lastName.matches(".*[<>\"].*"))
+		if (lname.matches(".*[<>\"].*"))
 			errors.add("LastName may not contain angle brackets or quotes");
-		if (firstName.matches(".*[<>\"].*"))
+		if (fname.matches(".*[<>\"].*"))
 			errors.add("FirstName may not contain angle brackets or quotes");
-		if (addr1.matches(".*[<>\"].*"))
+		if (address.matches(".*[<>\"].*"))
 			errors.add("Address Line1 may not contain angle brackets or quotes");
-		if (addr2.matches(".*[<>\"].*"))
-			errors.add("Address Line2 may not contain angle brackets or quotes");
 		if (city.matches(".*[<>\"].*"))
 			errors.add("City may not contain angle brackets or quotes");
 		if (state.matches(".*[<>\"].*"))
