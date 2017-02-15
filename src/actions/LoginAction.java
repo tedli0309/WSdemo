@@ -37,7 +37,7 @@ public class LoginAction {
 	@Produces(MediaType.APPLICATION_JSON)
 	public ObjectNode login(LoginForm loginForm) throws DAOException, RollbackException {
 		HttpSession session = request.getSession();
-		if (session.getAttribute("customer") != null) {
+		if (session.getAttribute("customer") != null || session.getAttribute("employee") != null) {
 			 session.invalidate();
 		} 
 		System.out.println(loginForm.toString());
@@ -57,9 +57,11 @@ public class LoginAction {
         ObjectNode root = mapper.createObjectNode();  
         if (errors.size() == 0) {
         	root.put("Message", user.getLastName());
-        } else {
         	session.setAttribute("customer", user);
-        	session.setMaxInactiveInterval(15 * 60); //Specifies the time, in seconds, between client requests before the servlet container will invalidate this session.
+        	session.setMaxInactiveInterval(15 * 60); //Specifies the time, in seconds, between client requests before the servlet
+        											 //container will invalidate this session.
+        } else {
+        	
         	for (String error : errors)  System.out.println(error); 
         	root.put("Message", "There seems to be an issue with the username/password combination that you entered");
         }
