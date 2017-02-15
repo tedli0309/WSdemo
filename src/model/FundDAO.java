@@ -12,5 +12,4 @@ public class FundDAO extends GenericDAO<FundBean>{
 	public FundDAO(ConnectionPool connectionPool, String tableName) throws DAOException {
 		super(FundBean.class, tableName, connectionPool);
 	}
-	
 }

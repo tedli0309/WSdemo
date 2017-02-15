@@ -16,6 +16,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.genericdao.ConnectionPool;
 import org.genericdao.DAOException;
+import org.genericdao.MatchArg;
 import org.genericdao.RollbackException;
 import org.genericdao.Transaction;
 
@@ -38,6 +39,8 @@ public class CreateFundAction {
 	@Consumes(MediaType.APPLICATION_JSON) 
 	@Produces(MediaType.APPLICATION_JSON)
 	public ObjectNode createFund(CreateFundForm fundForm) throws DAOException, RollbackException {
+		ConnectionPool pool = new ConnectionPool("com.mysql.jdbc.Driver", "jdbc:mysql:///test?useSSL=false");
+		FundDAO fundDAO  = new FundDAO(pool, "task8_fund");
 		Transaction.begin();
 		HttpSession session = request.getSession();
 		ObjectMapper mapper = new ObjectMapper();
@@ -52,12 +55,12 @@ public class CreateFundAction {
 		}
 		
 		System.out.println(fundForm.getName());
-		ConnectionPool pool = new ConnectionPool("com.mysql.jdbc.Driver", "jdbc:mysql:///test?useSSL=false");
-		FundDAO fundDAO  = new FundDAO(pool, "task8_fund");
+		
+		
 		
 		List<String> errors = fundForm.getValidationErrors();
-		FundBean fund = fundDAO.read(fundForm.getName()); 
-		if(fund != null) {
+		FundBean[] fund = fundDAO.match(MatchArg.equals("name", fundForm.getName())); 
+		if(fund.length != 0) {
 			errors.add("Already exists");
 		}
 		

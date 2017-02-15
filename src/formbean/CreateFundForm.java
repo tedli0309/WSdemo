@@ -16,7 +16,7 @@ public class  CreateFundForm extends FormBean{
 	@JsonProperty
 	private String initial_value;
 	
-	public void setFName(String name) {
+	public void setName(String name) {
 		this.name = trimAndConvert(name,"<>\"");
 	}
 	public void setSymbol(String symbol)    { 

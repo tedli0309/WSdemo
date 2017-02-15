@@ -21,10 +21,10 @@ public class FundBean {
 	public String getInitial_value() 	{return initial_value;}
 	public int getFundId() 			{return fundId;}
 	
-	public void getName(String name) 					{this.name = name;}
-	public void getSymbol(String symbol) 				{this.symbol = symbol;}
-	public void getInitial_value(String initial_value) 	{this.initial_value =  initial_value;}
-	public void getFundId(int fundId) 					{this.fundId = fundId;}
+	public void setName(String name) 					{this.name = name;}
+	public void setSymbol(String symbol) 				{this.symbol = symbol;}
+	public void setInitial_value(String initial_value) 	{this.initial_value =  initial_value;}
+	public void setFundId(int fundId) 					{this.fundId = fundId;}
 	
 	
 }
