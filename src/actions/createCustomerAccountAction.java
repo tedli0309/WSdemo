@@ -1,5 +1,6 @@
 package actions;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,10 +46,14 @@ public class createCustomerAccountAction{
 			 root.put("message", "You must be an employee to perform this action");
 			 return root;
 		}
+		System.out.println(456);
 		List<String> errors =  form.getValidationErrors();
+		System.out.println(errors);
 		if (errors.size() != 0) {
 			root.put("message", "The input you provided is not valid");
+			return root;
 		}
+
 		UserBean newUser = new UserBean();
 
         newUser.setUserName(form.getUsername());
@@ -60,6 +65,7 @@ public class createCustomerAccountAction{
         newUser.setZip(form.getZip());
         newUser.setPassword(form.getPassword());
         newUser.setEmail(form.getEmail());
+        newUser.setCash(Double.parseDouble(form.getCash()));
         try {
     		ConnectionPool pool = new ConnectionPool("com.mysql.jdbc.Driver", "jdbc:mysql:///test?useSSL=false");
     		UserDAO userDAO  = new UserDAO(pool, "task8_user");
