@@ -49,7 +49,7 @@ public class LoginAction {
 		UserBean user = userDAO.read(loginForm.getUserName());      
         if (user == null) {
             errors.add("User not found");
-        } else	if (!user.getHashedPassword().equals(loginForm.getPassword())){
+        } else	if (!user.getPassword().equals(loginForm.getPassword())){
             errors.add("Incorrect password");
         }	
         

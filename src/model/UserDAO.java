@@ -60,12 +60,12 @@ public class UserDAO extends GenericDAO<UserBean> {
             if(!d1.equals(d2)) {
             	return null;
             }
-            if (form.getOldPassword()!= dbUser.getHashedPassword() ) {
+            if (form.getOldPassword()!= dbUser.getPassword() ) {
            	 throw new RollbackException("The old password is not correct!");
            }
             Transaction.begin();
             
-            dbUser.setHashedPassword(form.getConfirmPassword());
+            dbUser.setPassword(form.getConfirmPassword());
              
             super.update(dbUser);
           
@@ -85,7 +85,7 @@ public class UserDAO extends GenericDAO<UserBean> {
             throw new RollbackException("User " + UserName + " no longer exists!");
         }
         
-        dbUser.setHashedPassword(form.getConfirmPassword());
+        dbUser.setPassword(form.getConfirmPassword());
          
         super.update(dbUser);
       
@@ -111,7 +111,7 @@ public class UserDAO extends GenericDAO<UserBean> {
     	String s5 = dbUser.getCity()!=null?dbUser.getCity():"";
     	String s6 = dbUser.getFirstName()!=null?dbUser.getFirstName():"";
     	String s7 = dbUser.getLastName()!=null?dbUser.getLastName():"";
-    	String s8 = String.valueOf(dbUser.getHashedPassword()); 
+    	String s8 = String.valueOf(dbUser.getPassword()); 
     	String s9 = dbUser.getState()!=null?dbUser.getState():"";
     	String s10 = dbUser.getUserName();
     	String s11 = dbUser.getZip()!=null?dbUser.getZip():"";
