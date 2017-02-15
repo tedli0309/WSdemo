@@ -43,8 +43,21 @@ public class LoginAction {
 		System.out.println(loginForm.toString());
 		ConnectionPool pool = new ConnectionPool("com.mysql.jdbc.Driver", "jdbc:mysql:///test?useSSL=false");
 		UserDAO userDAO  = new UserDAO(pool, "task8_user");
-		
+		ObjectMapper mapper = new ObjectMapper();
+	    ObjectNode root = mapper.createObjectNode();  
 		List<String> errors = loginForm.getValidationErrors();
+		
+		if (loginForm.getUserName().equals("admin")) {
+			if (loginForm.getPassword().equals("admin")) {
+				session.setAttribute("employee", "admin");
+	        	session.setMaxInactiveInterval(15 * 60);
+	        	root.put("Message", "welcome jane");
+			} else {
+				root.put("Message", "There seems to be an issue with the username/password combination that you entered");
+			}
+			return root;
+		}
+		
 		
 		UserBean user = userDAO.read(loginForm.getUserName());      
         if (user == null) {
@@ -53,10 +66,9 @@ public class LoginAction {
             errors.add("Incorrect password");
         }	
         
-        ObjectMapper mapper = new ObjectMapper();
-        ObjectNode root = mapper.createObjectNode();  
+       
         if (errors.size() == 0) {
-        	root.put("Message", user.getLastName());
+        	root.put("Message", "welcome" + user.getLastName());
         	session.setAttribute("customer", user);
         	session.setMaxInactiveInterval(15 * 60); //Specifies the time, in seconds, between client requests before the servlet
         											 //container will invalidate this session.

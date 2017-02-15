@@ -1,0 +1,76 @@
+package actions;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+
+import org.genericdao.ConnectionPool;
+import org.genericdao.DAOException;
+import org.genericdao.DuplicateKeyException;
+import org.genericdao.MatchArg;
+import org.genericdao.RollbackException;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
+import databean.UserBean;
+import formbean.CustomerRegisterForm;
+import model.UserDAO;
+
+@Path("/createCustomerAccount")
+public class createCustomerAccountAction{
+	@Context 
+	HttpServletRequest request;
+	
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON) 
+	@Produces(MediaType.APPLICATION_JSON)
+	public ObjectNode createAccount(CustomerRegisterForm form) 
+			throws DAOException, RollbackException {
+		System.out.println("entered the createCustomerAccount");
+		HttpSession session = request.getSession();
+		ObjectMapper mapper = new ObjectMapper();
+	    ObjectNode root = mapper.createObjectNode();  
+		if (session.getAttribute("customer") == null && session.getAttribute("employee") == null) {
+			 root.put("message", "You are not currently logged in");
+			 return root;
+		} else if (session.getAttribute("employee") == null) {
+			 root.put("message", "You must be an employee to perform this action");
+			 return root;
+		}
+		List<String> errors =  form.getValidationErrors();
+		if (errors.size() != 0) {
+			root.put("message", "The input you provided is not valid");
+		}
+		UserBean newUser = new UserBean();
+
+        newUser.setUserName(form.getUsername());
+        newUser.setFirstName(form.getFname());
+        newUser.setLastName(form.getLname());
+        newUser.setAddress(form.getAddress());
+        newUser.setCity(form.getCity());
+        newUser.setState(form.getState());
+        newUser.setZip(form.getZip());
+        newUser.setPassword(form.getPassword());
+        newUser.setEmail(form.getEmail());
+        try {
+    		ConnectionPool pool = new ConnectionPool("com.mysql.jdbc.Driver", "jdbc:mysql:///test?useSSL=false");
+    		UserDAO userDAO  = new UserDAO(pool, "task8_user");
+            userDAO.create(newUser);            
+            root.put("message", "fname was registered succesfully");
+            return root;
+        } catch (DuplicateKeyException e) {
+            root.put("message", "The input you provided is not valid");
+            return root;
+        }
+		
+
+	}
+}

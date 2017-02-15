@@ -27,11 +27,11 @@ public class LogoutAction {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON) 
 	@Produces(MediaType.APPLICATION_JSON)
-	public ObjectNode login() throws DAOException, RollbackException {
+	public ObjectNode logout() throws DAOException, RollbackException {
 		HttpSession session = request.getSession();
 		ObjectMapper mapper = new ObjectMapper();
 	    ObjectNode root = mapper.createObjectNode();  
-		if (session.getAttribute("customer") != null || session.getAttribute("user") != null) {
+		if (session.getAttribute("customer") != null || session.getAttribute("employee") != null) {
 			 root.put("message", "You have been successfully logged out");
 		} else {
 			root.put("message", "You are not currently logged in");

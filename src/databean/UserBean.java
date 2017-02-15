@@ -10,27 +10,26 @@ public class UserBean {
 	private String lastName;
 	private String firstName;
 	private String userName;
-	private String addr1;
-	private String addr2;
+	private String address;
 	private String city;
 	private String state;
 	private String zip;
 	private double cash =0.0;
 	private String password;
+	private String email;
 	
 	public UserBean() {}
-	public UserBean(String email, String lastName, String firstName, String password, String userName, String addr1, String addr2, String city, String state, String zip) {
-		//this.email = email;
+	public UserBean(String email, String lastName, String firstName,
+			String password, String userName, String address,String city, String state, String zip) {
+		this.email = email;
 		this.lastName = lastName;
 		this.firstName = firstName;
 		this.password = password;
 		this.userName = userName;
-		this.addr1 = addr1;
-		this.addr2 = addr2;
+		this.address = address;
 		this.city = city;
 		this.state = state;
 		this.zip = zip;
-		
 	}
  
 	public String getPassword() 		{return password;}
@@ -38,30 +37,26 @@ public class UserBean {
 	public String getLastName() 		{return lastName;}
 	public String getFirstName() 		{return firstName;}
 	public String getUserName() 		{return userName;}
-	public String getAddr1() 		{return addr1;}
-	public String getAddr2() 		{return addr2;}
+	public String getAddress() 		{return address;}
 	public String getCity() 		{return city;}
 	public String getState() 		{return state;}
 	public String getZip() 		    {return zip;}
 	public double getCash() 		{return cash;}
+	public String getEmail() 		{return email;}
 	
 	public void setPassword(String password) 	{this.password = password;}
 	public void setUserId(int i)		{userId = i;}
 	public void setLastName(String s) 	{lastName = s;}
 	public void setFirstName(String s)  {firstName = s;}
 	public void setUserName(String s) 	{userName = s;}
-	public void setAddr1(String s) 	{addr1 = s;}
-	public void setAddr2(String s) 	{addr2 = s;}
+	public void setAddress(String s) 	{address = s;}
 	public void setCity(String s) 	{city = s;}
 	public void setState(String s) 	{state = s;}
 	public void setZip(String s) 	{zip = s;}
 	public void setCash(double d) 	{cash = d;}
-		
+	public void setEmail(String s) 	{email = s;}
 	public String toString() {
 		return getLastName()+ ", "+ getFirstName();
-	}
-	public String toAddressString() {
-		return  getAddr1() +  getAddr2() ;
 	}
  
 }

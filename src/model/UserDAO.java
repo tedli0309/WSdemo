@@ -3,6 +3,7 @@ package model;
 
 import org.genericdao.ConnectionPool;
 import org.genericdao.DAOException;
+import org.genericdao.DuplicateKeyException;
 import org.genericdao.GenericDAO;
 import org.genericdao.MatchArg;
 import org.genericdao.RollbackException;
@@ -34,7 +35,7 @@ public class UserDAO extends GenericDAO<UserBean> {
 		try {
 			Transaction.begin();
 			UserBean[] u =	match(MatchArg.equals("userName",user.getUserName()));
-			if (u.length > 0) throw new RollbackException("this UserName has been used!");
+			if (u.length > 0) throw new DuplicateKeyException("this UserName has been used!");
 			super.create(user);
 			Transaction.commit();
 		} finally {
@@ -102,23 +103,25 @@ public class UserDAO extends GenericDAO<UserBean> {
         Transaction.commit();
         return users;
     }
-    public String computeDigest(UserBean dbUser) {
-    	String ans;
-    	String s1 = String.valueOf(dbUser.getUserId());
-    	String s2 = dbUser.getAddr1()!=null?dbUser.getAddr1():""; 
-    	String s3 = dbUser.getAddr2()!=null?dbUser.getAddr1():"";
-    	String s4 = String.valueOf(dbUser.getCash());
-    	String s5 = dbUser.getCity()!=null?dbUser.getCity():"";
-    	String s6 = dbUser.getFirstName()!=null?dbUser.getFirstName():"";
-    	String s7 = dbUser.getLastName()!=null?dbUser.getLastName():"";
-    	String s8 = String.valueOf(dbUser.getPassword()); 
-    	String s9 = dbUser.getState()!=null?dbUser.getState():"";
-    	String s10 = dbUser.getUserName();
-    	String s11 = dbUser.getZip()!=null?dbUser.getZip():"";
-		
-    	ans = s1 + s2 + s3 + s4+s5+s6+s7+s8+s9+s10+s11;
-    	return ans;
-		
-    	
-    }
+
+//    public String computeDigest(UserBean dbUser) {
+//    	String ans;
+//    	String s1 = String.valueOf(dbUser.getUserId());
+//    	String s2 = dbUser.getAddr1()!=null?dbUser.getAddr1():""; 
+//    	String s3 = dbUser.getAddr2()!=null?dbUser.getAddr1():"";
+//    	String s4 = String.valueOf(dbUser.getCash());
+//    	String s5 = dbUser.getCity()!=null?dbUser.getCity():"";
+//    	String s6 = dbUser.getFirstName()!=null?dbUser.getFirstName():"";
+//    	String s7 = dbUser.getLastName()!=null?dbUser.getLastName():"";
+//    	String s8 = String.valueOf(dbUser.getHashedPassword()); 
+//    	String s9 = dbUser.getState()!=null?dbUser.getState():"";
+//    	String s10 = dbUser.getUserName();
+//    	String s11 = dbUser.getZip()!=null?dbUser.getZip():"";
+//		
+//    	ans = s1 + s2 + s3 + s4+s5+s6+s7+s8+s9+s10+s11;
+//    	return ans;
+//		
+//    	
+//    }
+
 }
