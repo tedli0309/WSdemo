@@ -57,7 +57,7 @@ public class CustomerRegisterForm extends FormBean{
 		this.password = password.trim();
 	}
 	public void setEmail(String s) {
-		this.email = email.trim();
+		this.email = s.trim();
 	}
 	
 	public String getUsername() {
@@ -116,6 +116,14 @@ public class CustomerRegisterForm extends FormBean{
 		}
 		if (city == null || city.length() == 0) {
 			errors.add("city is required");
+		}
+		if (cash == null || cash.length() == 0) {
+			errors.add("cash is required");
+			try {
+				double temp = Double.parseDouble(cash);
+			} catch (Exception e) {
+				errors.add("cash format is not suitable");
+			}
 		}
 		if (errors.size() > 0) {
 			//System.out.println(errors.size());
