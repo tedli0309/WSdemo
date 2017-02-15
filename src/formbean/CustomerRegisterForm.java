@@ -59,6 +59,9 @@ public class CustomerRegisterForm extends FormBean{
 	public void setEmail(String s) {
 		this.email = s.trim();
 	}
+	public void setCash(String s) {
+		this.cash = s;
+	}
 	
 	public String getUsername() {
 		return username;
@@ -86,6 +89,9 @@ public class CustomerRegisterForm extends FormBean{
 	}
 	public String getEmail() {
 		return email;
+	}
+	public String getCash() {
+		return cash;
 	}
 	public List<String> getValidationErrors() {
 		//System.out.println(lastName.length());
@@ -119,11 +125,12 @@ public class CustomerRegisterForm extends FormBean{
 		}
 		if (cash == null || cash.length() == 0) {
 			errors.add("cash is required");
-			try {
-				double temp = Double.parseDouble(cash);
-			} catch (Exception e) {
-				errors.add("cash format is not suitable");
-			}
+			
+		}
+		try {
+			double temp = Double.parseDouble(cash);
+		} catch (NumberFormatException e) {
+			errors.add("cash format is wrong!");
 		}
 		if (errors.size() > 0) {
 			//System.out.println(errors.size());

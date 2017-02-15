@@ -47,7 +47,7 @@ public class LoginAction {
 	    ObjectNode root = mapper.createObjectNode();  
 		List<String> errors = loginForm.getValidationErrors();
 		
-		if (loginForm.getUserName().equals("admin")) {
+		if (loginForm.getUserName().equals("jadmin")) {
 			if (loginForm.getPassword().equals("admin")) {
 				session.setAttribute("employee", "admin");
 	        	session.setMaxInactiveInterval(15 * 60);
