@@ -13,7 +13,6 @@ import javax.ws.rs.core.MediaType;
 
 import org.genericdao.ConnectionPool;
 import org.genericdao.DAOException;
-import org.genericdao.MatchArg;
 import org.genericdao.RollbackException;
 import org.genericdao.Transaction;
 
@@ -21,28 +20,27 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import databean.UserBean;
-import formbean.DepositCheckForm;
+import formbean.RequestCheckForm;
 import model.UserDAO;
 
-@Path("/depositCheck")
-public class DepositCheckAction {
+@Path("/requestCheck")
+public class RequestCheckAction {
 	@Context 
 	HttpServletRequest request;
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON) 
 	@Produces(MediaType.APPLICATION_JSON)
-	public ObjectNode depositeCheck(DepositCheckForm checkForm) throws DAOException, RollbackException {
-		
+	public ObjectNode requestCheck(RequestCheckForm checkForm) throws DAOException, RollbackException {
 		ConnectionPool pool = new ConnectionPool("com.mysql.jdbc.Driver", "jdbc:mysql:///test?useSSL=false");
 		UserDAO userDAO  = new UserDAO(pool, "task8_user");
 
 		HttpSession session = request.getSession();
 		ObjectMapper mapper = new ObjectMapper();
         ObjectNode root = mapper.createObjectNode();  
-	    if (session.getAttribute("employee") == null) {
-			if(session.getAttribute("customer") != null) {
-				root.put("Message", "You must be a employee to perform this action");
+	    if (session.getAttribute("customer") == null) {
+			if(session.getAttribute("employee") != null) {
+				root.put("Message", "You must be a customer to perform this action");
 			} else {
 				root.put("Message", "You are not currently logged in");
 			}
@@ -61,29 +59,29 @@ public class DepositCheckAction {
 		}
 		
 		
-		UserBean[] userList =  userDAO.match((MatchArg.equals("userName",checkForm.getUserName())));
-		if(userList.length == 0) {
-			root.put("Message", "The input you provided is not valid");
-			return root;
-		}
+		UserBean customer = (UserBean) session.getAttribute("customer");
+		Double requestAmount = Double.parseDouble(checkForm.getCashValue());
 		try {
 			Transaction.begin();
-			UserBean customer = userList[0];
 			double currentCash = customer.getCash();
-			double updateCash = currentCash + Double.parseDouble(checkForm.getCheckAmount());
+			if (currentCash < requestAmount) {
+				root.put("Message", "You don't have sufficient funds in your account to cover the requested check");
+				return root;
+			}
+			
+			double updateCash = currentCash - requestAmount;
 			customer.setCash(updateCash);
 			userDAO.update(customer);
 			
-			root.put("Message", "The check was successfully deposited");
+			root.put("Message", "The check whas been successfully requested");
 			Transaction.commit();
 			return root;
 		}catch (RollbackException e) {
-			root.put("Message", "The input you provided is not valid");
+			root.put("Message", "You don't have sufficient funds in your account to cover the requested check");
 			return root;
 		}finally {
 			if (Transaction.isActive()) Transaction.rollback();
 		}
-		
 	}
 	
 }
