@@ -74,11 +74,11 @@ public class SellFundAction {
 				return root;
 			}
 	
-			double share = Double.parseDouble(sellForm.getNumShare());			
+			int share = Integer.parseInt(sellForm.getNumShare());			
 			double price = Double.parseDouble(fund.getPrice());
 			PositionBean position = positionDAO.getPosition(user.getUserId(), fund.getFundId());
 			if(position == null) {
-				position = new PositionBean(user.getUserId(), fund.getFundId(), 0.0);
+				position = new PositionBean(user.getUserId(), fund.getFundId(), 0);
 				positionDAO.create(position);
 			}
 			

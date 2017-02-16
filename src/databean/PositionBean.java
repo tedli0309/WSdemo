@@ -6,13 +6,13 @@ import org.genericdao.PrimaryKey;
 public class PositionBean {
 	private int userId;
 	private int fundId;
-	private double shares;
+	private int shares;
 	
 
 	public PositionBean(){
 		
 	}
-	public PositionBean(int userId,int fundId,double shares){
+	public PositionBean(int userId,int fundId,int shares){
 		this.userId = userId;
 		this.fundId = fundId;
 		this.shares = shares;
@@ -20,9 +20,9 @@ public class PositionBean {
 	
 	public int getUserId() 			{return userId;}
 	public int getFundId() 			{return fundId;}
-	public double getShares() 		{return shares;}
+	public int getShares() 		{return shares;}
 	
 	public void setUserId(int i) 		{userId = i;}
 	public void setFundId(int i)		{fundId = i;}
-	public void setShares(double d)  	{shares = d;}
+	public void setShares(int d)  	{shares = d;}
 }

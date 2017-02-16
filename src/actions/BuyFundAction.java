@@ -86,12 +86,12 @@ public class BuyFundAction {
 			
 			PositionBean position = positionDAO.getPosition(user.getUserId(), fund.getFundId());
 			if(position == null) {
-				position = new PositionBean(user.getUserId(), fund.getFundId(), 0.0);
+				position = new PositionBean(user.getUserId(), fund.getFundId(), 0);
 				positionDAO.create(position);
 			}
 			
 			user.setCash(balance - amount);			
-			position.setShares(position.getShares() +  amount/price);
+			position.setShares(position.getShares() +  (int)(amount/price));
 			
 			positionDAO.update(position);
 			userDAO.update(user);
