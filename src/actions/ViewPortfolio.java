@@ -19,6 +19,7 @@ import org.genericdao.RollbackException;
 import org.genericdao.Transaction;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import databean.FundBean;
@@ -62,13 +63,21 @@ public class ViewPortfolio {
 		
         if (ans2.size() == 0) {
         	root.put("message", "You don't have any funds in your Portfolio");
+        	return root;
         }
         root.put("message", "The action was successful");
 		root.put("cash", "" + user.getCash());
-        
-        
 		
-		
+		ArrayNode fundsNode = mapper.createArrayNode();
+        for (OwnerFundsBean oneFund : ans2) {
+			ObjectNode curFund = mapper.createObjectNode();
+			curFund.put("name", oneFund.getName());
+			curFund.put("shares", oneFund.getShares());
+			curFund.put("price", oneFund.getPrice());
+			fundsNode.add(curFund);			 
+			
+        }
+        root.set("funds", fundsNode);
 		
 		return root;
 	}
