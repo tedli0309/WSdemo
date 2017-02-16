@@ -48,6 +48,8 @@ public class TransitionDayAction {
 		}catch(Exception e) {
 			e.printStackTrace();
 			return null;
+		}finally{
+			if(Transaction.isActive())Transaction.rollback();
 		}
         
 	}
