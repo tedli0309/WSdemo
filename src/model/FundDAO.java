@@ -14,14 +14,7 @@ public class FundDAO extends GenericDAO<FundBean>{
 	public FundDAO(ConnectionPool connectionPool, String tableName) throws DAOException {
 		super(FundBean.class, tableName, connectionPool);
 	}
-<<<<<<< HEAD
 
-
-	
-	
-	
-	
-=======
 	public FundBean getFund(String name) throws RollbackException {
 		try	{
 			Transaction.begin();
@@ -74,5 +67,5 @@ public class FundDAO extends GenericDAO<FundBean>{
 		// TODO Auto-generated method stub
 		return null;
 	}
->>>>>>> f068bbe80e771a4b5316061be42dea4bfb7521fd
+
 }

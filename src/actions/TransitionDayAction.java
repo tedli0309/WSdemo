@@ -29,23 +29,26 @@ public class TransitionDayAction {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON) 
 	@Produces(MediaType.APPLICATION_JSON)
-	public ObjectNode createFund(CreateFundForm fundForm) throws DAOException, RollbackException {
-		ObjectMapper mapper = new ObjectMapper();
-        ObjectNode root = mapper.createObjectNode();
-        
-        ConnectionPool pool = new ConnectionPool("com.mysql.jdbc.Driver", "jdbc:mysql:///test?useSSL=false");
-		FundDAO fundDAO  = new FundDAO(pool, "task8_fund");
-		TransactionDAO transactionDAO = new TransactionDAO(pool, "task8_transaction");
-		double price,seed;
+	public ObjectNode createFund(CreateFundForm fundForm){
 		try{
+			ObjectMapper mapper = new ObjectMapper();
+	        ObjectNode root = mapper.createObjectNode();
+	        
+	        ConnectionPool pool = new ConnectionPool("com.mysql.jdbc.Driver", "jdbc:mysql:///test?useSSL=false");
+			FundDAO fundDAO  = new FundDAO(pool, "task8_fund");
+			TransactionDAO transactionDAO = new TransactionDAO(pool, "task8_transaction");
+			double price,seed;
+			
 			FundBean[] funds = fundDAO.match();
 			for(FundBean fund:funds) {
 				price = Double.parseDouble(fund.getPrice());
-				
+				seed = Math.random();
 			}
+			return root;
 		}catch(Exception e) {
-			
+			e.printStackTrace();
+			return null;
 		}
-        return root;
+        
 	}
 }
