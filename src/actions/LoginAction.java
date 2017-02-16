@@ -37,9 +37,8 @@ public class LoginAction {
 	@Produces(MediaType.APPLICATION_JSON)
 	public ObjectNode login(LoginForm loginForm) throws DAOException, RollbackException {
 		HttpSession session = request.getSession();
-		if (session.getAttribute("customer") != null || session.getAttribute("employee") != null) {
-			 session.invalidate();
-		} 
+		session.setAttribute("customer", null); 
+		session.setAttribute("employee", null);  
 		System.out.println(loginForm.toString());
 		ConnectionPool pool = new ConnectionPool("com.mysql.jdbc.Driver", "jdbc:mysql:///test?useSSL=false");
 		UserDAO userDAO  = new UserDAO(pool, "task8_user");
@@ -72,7 +71,7 @@ public class LoginAction {
         
        
         if (errors.size() == 0) {
-        	root.put("Message", "welcome" + user.getLastName());
+        	root.put("Message", "welcome " + user.getFirstName());
         	session.setAttribute("customer", user);
         	session.setMaxInactiveInterval(15 * 60); //Specifies the time, in seconds, between client requests before the servlet
         											 //container will invalidate this session.
