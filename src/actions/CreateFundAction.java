@@ -38,9 +38,11 @@ public class CreateFundAction {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON) 
 	@Produces(MediaType.APPLICATION_JSON)
-	public ObjectNode createFund(CreateFundForm fundForm) throws DAOException, RollbackException {
+	public ObjectNode createFund(CreateFundForm fundForm)  {
+		try{
 		ConnectionPool pool = new ConnectionPool("com.mysql.jdbc.Driver", "jdbc:mysql:///test?useSSL=false");
 		FundDAO fundDAO  = new FundDAO(pool, "task8_fund");
+		
 		Transaction.begin();
 		HttpSession session = request.getSession();
 		ObjectMapper mapper = new ObjectMapper();
@@ -79,6 +81,14 @@ public class CreateFundAction {
 		
 		Transaction.commit();
 		return root;
+	}catch(DAOException e){
+		e.printStackTrace();
+		return null;
+	}catch(RollbackException e){
+		e.printStackTrace();
+		return null;
+	}
+		
 		
 	}
 }
