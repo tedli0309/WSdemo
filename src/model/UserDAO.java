@@ -19,15 +19,15 @@ public class UserDAO extends GenericDAO<UserBean> {
 	}
 	
 	public UserBean read(String userName) throws RollbackException {
-		try	{
-			Transaction.begin();
+		//try	{
+			//Transaction.begin();
 			UserBean[] res =  match(MatchArg.equals("userName",userName));
 			if (res.length == 0)  return null;
-			Transaction.commit();
+			//Transaction.commit();
 			return res[0];
-		} finally {
-			if (Transaction.isActive()) Transaction.rollback();
-		}
+		//} finally {
+			//if (Transaction.isActive()) Transaction.rollback();
+		//}
 	}
 	
 	public void create(UserBean user) throws RollbackException {		
