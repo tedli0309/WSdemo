@@ -38,15 +38,6 @@ public class FundDAO extends GenericDAO<FundBean>{
 			//if (Transaction.isActive()) Transaction.rollback();
 		//}
 	}
-	public void create(FundBean fund) throws RollbackException {		
-		try {
-			Transaction.begin();
-			super.create(fund);
-			Transaction.commit();
-		} finally {
-			if (Transaction.isActive()) Transaction.rollback();
-		}
-	}
 	
 	public FundBean[] getFunds() throws RollbackException {
 		try{
