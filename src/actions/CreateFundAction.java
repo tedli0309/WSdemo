@@ -58,8 +58,6 @@ public class CreateFundAction {
 		
 		System.out.println(fundForm.getName());
 		
-		
-		
 		List<String> errors = fundForm.getValidationErrors();
 		FundBean[] fund = fundDAO.match(MatchArg.equals("name", fundForm.getName())); 
 		if(fund.length != 0) {
