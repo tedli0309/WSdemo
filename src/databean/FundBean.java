@@ -4,6 +4,7 @@ import org.genericdao.PrimaryKey;
 
 @PrimaryKey("fundId")
 public class FundBean {
+
 	private int fundId;
 	private String name;
 	private String symbol;
@@ -28,4 +29,17 @@ public class FundBean {
 	public void setName(String s) 		{name = s;}
 	public void setSymbol(String s)  	{symbol = s;}
 	public void setPrice(double d)		{price = d;}
+
+	
+	
+	
+	public FundBean(String name, String symbol, String initial_value) {
+		this.name = name;
+		this.symbol = symbol;
+		this.price = Double.parseDouble(initial_value);
+	}
+	
+	
+	
+
 }

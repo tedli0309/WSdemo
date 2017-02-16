@@ -1,7 +1,5 @@
 package actions;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
@@ -16,10 +14,10 @@ import org.genericdao.RollbackException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+@Path("/depositCheck")
+public class DepositCheckAction {
 
 
-@Path("/logout")
-public class LogoutAction {
 
 	@Context 
 	HttpServletRequest request;
@@ -40,4 +38,6 @@ public class LogoutAction {
 		return root; 
 	}
 }
+
+
 
