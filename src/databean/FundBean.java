@@ -8,13 +8,11 @@ public class FundBean {
 	private int fundId;
 	private String name;
 	private String symbol;
-	private double price;
+
+	private String price;
 	
-	public FundBean() {
-		
-	}
-	
-	public FundBean(String name, String symbol, double price){
+	public FundBean() {}
+	public FundBean(String name, String symbol, String price) {
 		this.name = name;
 		this.symbol = symbol;
 		this.price = price;
@@ -23,21 +21,16 @@ public class FundBean {
 	public int getFundId() 			{return fundId;}
 	public String getName() 		{return name;}
 	public String getSymbol() 		{return symbol;}
-	public double getPrice()		{return price;}
+	public String getPrice() 	{return price;}
 	
-	public void setFundId(int i)		{fundId = i;}
-	public void setName(String s) 		{name = s;}
-	public void setSymbol(String s)  	{symbol = s;}
-	public void setPrice(double d)		{price = d;}
+	public void setName(String name) 					{this.name = name;}
+	public void setSymbol(String symbol) 				{this.symbol = symbol;}
+	public void setPrice(String price) 					{this.price =  price;}
+	public void setFundId(int fundId) 					{this.fundId = fundId;}
 
 	
 	
 	
-	public FundBean(String name, String symbol, String initial_value) {
-		this.name = name;
-		this.symbol = symbol;
-		this.price = Double.parseDouble(initial_value);
-	}
 	
 	
 	

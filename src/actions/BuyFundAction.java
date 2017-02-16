@@ -74,7 +74,7 @@ public class BuyFundAction {
 	
 			double amount = Double.parseDouble(buyForm.getCashValue());			
 			double balance = user.getCash();
-			double price = fund.getPrice();
+			double price = Double.parseDouble(fund.getPrice());
 			
 			if(balance < amount){
 				root.put("message", "You don't have enough cash in your account to make this purchase");
