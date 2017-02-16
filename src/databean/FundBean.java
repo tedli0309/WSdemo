@@ -23,6 +23,7 @@ public class FundBean {
 	public String getName() 		{return name;}
 	public String getSymbol() 		{return symbol;}
 	public String getPrice() 	{return price;}
+
 	
 	public void setName(String name) 					{this.name = name;}
 	public void setSymbol(String symbol) 				{this.symbol = symbol;}

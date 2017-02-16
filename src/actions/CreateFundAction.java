@@ -85,6 +85,8 @@ public class CreateFundAction {
 	}catch(RollbackException e){
 		e.printStackTrace();
 		return null;
+	}finally{
+		if(Transaction.isActive())Transaction.rollback();
 	}
 		
 		
