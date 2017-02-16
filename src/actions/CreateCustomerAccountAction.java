@@ -46,7 +46,7 @@ public class createCustomerAccountAction{
 			 root.put("message", "You must be an employee to perform this action");
 			 return root;
 		}
-		System.out.println(456);
+		
 		List<String> errors =  form.getValidationErrors();
 		System.out.println(errors);
 		if (errors.size() != 0) {
