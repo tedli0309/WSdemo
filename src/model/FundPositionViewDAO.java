@@ -14,10 +14,10 @@ public class FundPositionViewDAO extends GenericViewDAO<OwnerFundsBean>{
 	public OwnerFundsBean[] getFundPosition() throws RollbackException{
 		try {
 			Transaction.begin();
-			String sql = "select task7_fund.fundId as fundId, task7_fund.symbol as symbol, task7_fund.name as name, "
-			         + "task7_position.shares as shares,  task7_fund.price as price , task7_position.userId as userId "
-			         + "from task7_fund , task7_position "
-			         + "where task7_fund.fundId = task7_position.fundId";
+			String sql = "select task8_fund.fundId as fundId, task8_fund.symbol as symbol, task8_fund.name as name, "
+			         + "task8_position.shares as shares,  task8_fund.price as price , task8_position.userId as userId "
+			         + "from task8_fund , task8_position "
+			         + "where task8_fund.fundId = task8_position.fundId";
 			OwnerFundsBean[] res = executeQuery(sql);
 
 			Transaction.commit();

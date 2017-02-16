@@ -1,6 +1,9 @@
 package actions;
 
+import java.util.Random;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -37,13 +40,33 @@ public class TransitionDayAction {
 	        ConnectionPool pool = new ConnectionPool("com.mysql.jdbc.Driver", "jdbc:mysql:///test?useSSL=false");
 			FundDAO fundDAO  = new FundDAO(pool, "task8_fund");
 			TransactionDAO transactionDAO = new TransactionDAO(pool, "task8_transaction");
-			double price,seed;
-			
+			double price,seed,value=0;
+			Random rand = new Random();
+			Transaction.begin();
+			HttpSession session = request.getSession();
+			if (session.getAttribute("employee") == null) {
+				if(session.getAttribute("customer") != null) {
+					root.put("Message", "You must be a employee to perform this action");
+				} else {
+					root.put("Message", "You are not currently logged in");
+				}
+				return root;
+			}
 			FundBean[] funds = fundDAO.match();
 			for(FundBean fund:funds) {
+				value = 0;
 				price = Double.parseDouble(fund.getPrice());
-				seed = Math.random();
+				while(value <= 0) {
+					seed = rand.nextDouble();
+					seed = (seed*20) -10;
+					value = price*seed/100 + price;
+				}
+				price = value;
+				fund.setPrice(Double.toString(price));
+				fundDAO.update(fund);
 			}
+			root.put("Message", "“The fund prices have been successfully recalculated");
+			Transaction.commit();
 			return root;
 		}catch(Exception e) {
 			e.printStackTrace();

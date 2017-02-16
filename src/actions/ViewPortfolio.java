@@ -37,7 +37,7 @@ public class ViewPortfolio {
 	@Consumes(MediaType.APPLICATION_JSON) 
 	@Produces(MediaType.APPLICATION_JSON)
 	public ObjectNode viewPortfolio() throws DAOException, RollbackException {
-		System.out.println("entered the createCustomerAccount");
+		System.out.println("entered the viewPortfolio");
 		HttpSession session = request.getSession();
 		ObjectMapper mapper = new ObjectMapper();
 	    ObjectNode root = mapper.createObjectNode();  
@@ -55,8 +55,12 @@ public class ViewPortfolio {
 		FundPositionViewDAO fundPositionViewDAO = new FundPositionViewDAO(pool);
 		
 		OwnerFundsBean[] fundsOfOwener2 = fundPositionViewDAO.getFundPosition();
+		//System.out.println("hahahahahhaha ");
+		//System.out.println(fundsOfOwener2.length);
+		
 		List<OwnerFundsBean> ans2= new ArrayList<>();
         for(OwnerFundsBean fo: fundsOfOwener2) {
+        	System.out.println(fo.toString());
         	 if(fo.getUserId() == user.getUserId())
         		 ans2.add(fo);
         }
@@ -72,7 +76,7 @@ public class ViewPortfolio {
         for (OwnerFundsBean oneFund : ans2) {
 			ObjectNode curFund = mapper.createObjectNode();
 			curFund.put("name", oneFund.getName());
-			curFund.put("shares", oneFund.getShares());
+			curFund.put("shares", Double.toString(oneFund.getShares()));
 			curFund.put("price", oneFund.getPrice());
 			fundsNode.add(curFund);			 
 			
