@@ -27,16 +27,18 @@ import databean.PositionBean;
 import databean.TransactionBean;
 import databean.UserBean;
 import formbean.BuyForm;
+import formbean.SellForm;
 
-@Path("/buyFund")
-public class BuyFundAction {
+
+@Path("/sellFund")
+public class SellFundAction {
 	@Context 
 	HttpServletRequest request;
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON) 
 	@Produces(MediaType.APPLICATION_JSON)
-	public ObjectNode buyFund(BuyForm buyForm) {
+	public ObjectNode buyFund(SellForm sellForm) {
 		ObjectNode root =  new ObjectMapper().createObjectNode();
 		
 		HttpSession session = request.getSession();
@@ -50,14 +52,14 @@ public class BuyFundAction {
 			return root;
 		}
 		
-		if(buyForm.getValidationErrors().size() > 0) {
+		if(sellForm.getValidationErrors().size() > 0) {
 			root.put("message", "The input you provided is not valid");
 			return root;
 		}
 		
 		try {
 			ConnectionPool pool = new ConnectionPool("com.mysql.jdbc.Driver", "jdbc:mysql:///test?useSSL=false");
-			//TransactionDAO transactionDAO = new TransactionDAO(pool, "task8_transaction");
+			TransactionDAO transactionDAO = new TransactionDAO(pool, "task8_transaction");
 			PositionDAO positionDAO = new PositionDAO(pool, "task8_position");
 			UserDAO userDAO = new UserDAO(pool, "task8_user");
 			FundDAO fundDAO = new FundDAO(pool, "task8_fund");
@@ -66,38 +68,33 @@ public class BuyFundAction {
 			Transaction.begin();
 			UserBean customer = (UserBean)session.getAttribute("customer");
 			UserBean user = userDAO.read(customer.getUserId());
-			FundBean fund = fundDAO.getFundBySymbol(buyForm.getSymbol());
+			FundBean fund = fundDAO.getFundBySymbol(sellForm.getSymbol());
 			if(fund == null) {
 				root.put("message", "The input you provided is not valid");
 				return root;
 			}
 	
-			double amount = Double.parseDouble(buyForm.getCashValue());			
-			double balance = user.getCash();
+			double share = Double.parseDouble(sellForm.getNumShare());			
 			double price = Double.parseDouble(fund.getPrice());
-			
-			if(balance < amount){
-				root.put("message", "You don't have enough cash in your account to make this purchase");
-			}	
-			if(price > amount){
-				root.put("message", "You didn't provide enough cash to make this purchase");
-				return root;
-			}
-			
 			PositionBean position = positionDAO.getPosition(user.getUserId(), fund.getFundId());
 			if(position == null) {
 				position = new PositionBean(user.getUserId(), fund.getFundId(), 0.0);
 				positionDAO.create(position);
 			}
 			
-			user.setCash(balance - amount);			
-			position.setShares(position.getShares() +  amount/price);
+			if(position.getShares() < share) {
+				root.put("message", "You don't have sufficient funds in your account to cover the requested check");
+				return root;
+			}
+	
+			position.setShares(position.getShares() - share);
+			user.setCash(user.getCash() + share * price);
 			
 			positionDAO.update(position);
 			userDAO.update(user);
 			//transactionDAO.create(new TransactionBean(user.getUserId(), fund.getFundId(), System.currentTimeMillis(), amount/price ,"buy",amount));
 			Transaction.commit();
-			root.put("message", "The fund has been successfully purchased");
+			root.put("message", "The shares have been successfully sold");
 			return root;
 		} catch (DAOException e1) {
 			e1.printStackTrace();

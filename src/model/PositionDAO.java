@@ -14,13 +14,13 @@ public class PositionDAO extends GenericDAO<PositionBean> {
 		super(PositionBean.class, tableName, connectionPool);
 	}
 	public void create(PositionBean position) throws RollbackException {		
-		try {
-			Transaction.begin();
+//		try {
+//			Transaction.begin();
 			super.create(position);
-			Transaction.commit();
-		} finally {
-			if (Transaction.isActive()) Transaction.rollback();
-		}
+//			Transaction.commit();
+//		} finally {
+//			if (Transaction.isActive()) Transaction.rollback();
+//		}
 	}
 	public PositionBean getPosition(int userId, int fundId) throws RollbackException {
 		//try	{
