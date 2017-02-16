@@ -46,16 +46,20 @@ public class LoginAction {
 		ObjectMapper mapper = new ObjectMapper();
 	    ObjectNode root = mapper.createObjectNode();  
 		List<String> errors = loginForm.getValidationErrors();
+		if (errors.size() != 0)	{
+			root.put("Message", "There seems to be an issue with the username/password combination that you entered");
+			return root;
+		}
 		
 		if (loginForm.getUserName().equals("jadmin")) {
-			if (loginForm.getPassword().equals("admin")) {
-				session.setAttribute("employee", "admin");
-	        	session.setMaxInactiveInterval(15 * 60);
-	        	root.put("Message", "welcome jane");
-			} else {
-				root.put("Message", "There seems to be an issue with the username/password combination that you entered");
-			}
-			return root;
+				if (loginForm.getPassword().equals("admin")) {
+					session.setAttribute("employee", "admin");
+		        	session.setMaxInactiveInterval(15 * 60);
+		        	root.put("Message", "welcome jane");
+				} else {
+					root.put("Message", "There seems to be an issue with the username/password combination that you entered");
+				}
+				return root;
 		}
 		
 		
