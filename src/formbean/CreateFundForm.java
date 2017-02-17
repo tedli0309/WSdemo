@@ -50,7 +50,7 @@ public class  CreateFundForm extends FormBean{
         }catch(NumberFormatException e) {
         	errors.add("Value should be a number!");
         }
-        if (value == 0) {
+        if (value <= 0) {
             errors.add("Value is required!");
         }
         if (errors.size() > 0) {
