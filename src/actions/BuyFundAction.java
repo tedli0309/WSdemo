@@ -78,6 +78,7 @@ public class BuyFundAction {
 			
 			if(balance < amount){
 				root.put("message", "You don't have enough cash in your account to make this purchase");
+				return root;
 			}	
 			if(price > amount){
 				root.put("message", "You didn't provide enough cash to make this purchase");
