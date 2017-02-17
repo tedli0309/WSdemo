@@ -83,7 +83,7 @@ public class SellFundAction {
 			}
 			
 			if(position.getShares() < share) {
-				root.put("message", "You don't have sufficient funds in your account to cover the requested check");
+				root.put("message", "You don't have that many shares in your portfolio");
 				return root;
 			}
 	

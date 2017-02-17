@@ -37,7 +37,8 @@ public class BuyForm extends FormBean {
 			errors.add("Cash value is required.");
 		}
 		
-		if(errors.size() > 0) return errors; // no need to further detect the errors anymore.
+		if(errors.size() > 0) return errors; 
+		// no need to further detect the errors anymore.
 
 		try{
 			double b = Double.parseDouble(cashValue);
