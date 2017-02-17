@@ -54,7 +54,7 @@ public class LoginAction {
 				if (loginForm.getPassword().equals("admin")) {
 					session.setAttribute("employee", "admin");
 		        	session.setMaxInactiveInterval(15 * 60);
-		        	root.put("Message", "welcome jane");
+		        	root.put("Message", "Welcome Jane");
 				} else {
 					root.put("Message", "There seems to be an issue with the username/password combination that you entered");
 				}
@@ -71,7 +71,7 @@ public class LoginAction {
         
        
         if (errors.size() == 0) {
-        	root.put("Message", "welcome " + user.getFirstName());
+        	root.put("Message", "Welcome " + user.getFirstName());
         	session.setAttribute("customer", user);
         	session.setMaxInactiveInterval(15 * 60); //Specifies the time, in seconds, between client requests before the servlet
         											 //container will invalidate this session.

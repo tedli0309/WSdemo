@@ -70,7 +70,7 @@ public class CreateCustomerAccountAction{
     		ConnectionPool pool = new ConnectionPool("com.mysql.jdbc.Driver", "jdbc:mysql:///test?useSSL=false");
     		UserDAO userDAO  = new UserDAO(pool, "task8_user");
             userDAO.create(newUser);            
-            root.put("message", "fname was registered succesfully");
+            root.put("message", newUser.getFirstName() + " was registered succesfully");
             return root;
         } catch (DuplicateKeyException e) {
             root.put("message", "The input you provided is not valid");
