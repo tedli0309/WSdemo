@@ -127,7 +127,7 @@ public class CustomerRegisterForm extends FormBean{
 			errors.add("city is required");
 		}
 		
-		if (cash == null && cash.length() == 0) {
+		if (cash == null || cash.length() == 0) {
 			cash = "0";
 		}
 		try {
