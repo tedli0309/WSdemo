@@ -46,7 +46,7 @@ public class TransitionDayAction {
 			HttpSession session = request.getSession();
 			if (session.getAttribute("employee") == null) {
 				if(session.getAttribute("customer") != null) {
-					root.put("Message", "You must be a employee to perform this action");
+					root.put("Message", "You must be an employee to perform this action");
 				} else {
 					root.put("Message", "You are not currently logged in");
 				}
@@ -65,7 +65,7 @@ public class TransitionDayAction {
 				fund.setPrice(Double.toString(price));
 				fundDAO.update(fund);
 			}
-			root.put("Message", "“The fund prices have been successfully recalculated");
+			root.put("Message", "The fund prices have been successfully recalculated");
 			Transaction.commit();
 			return root;
 		}catch(Exception e) {
