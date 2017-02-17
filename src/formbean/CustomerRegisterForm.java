@@ -132,6 +132,7 @@ public class CustomerRegisterForm extends FormBean{
 		}
 		try {
 			double temp = Double.parseDouble(cash);
+			if (temp < 0) errors.add("cash can't be negative");
 		} catch (NumberFormatException e) {
 			errors.add("cash format is wrong!");
 		}
