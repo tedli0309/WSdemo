@@ -40,7 +40,10 @@ public class BuyForm extends FormBean {
 		if(errors.size() > 0) return errors; // no need to further detect the errors anymore.
 
 		try{
-			Double.parseDouble(cashValue);
+			double b = Double.parseDouble(cashValue);
+			if(b <= 0){
+				throw new Exception();
+			}
 		}catch(Exception e) {
 			errors.add("Invalid cash value");
 		}
