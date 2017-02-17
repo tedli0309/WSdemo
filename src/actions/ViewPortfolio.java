@@ -27,6 +27,7 @@ import databean.OwnerFundsBean;
 import databean.UserBean;
 import model.FundDAO;
 import model.FundPositionViewDAO;
+import model.PositionDAO;
 
 @Path("/viewPortfolio")
 public class ViewPortfolio {
@@ -52,11 +53,10 @@ public class ViewPortfolio {
 		UserBean user = (UserBean) session.getAttribute("customer");
 		
 		ConnectionPool pool = new ConnectionPool("com.mysql.jdbc.Driver", "jdbc:mysql:///test?useSSL=false");
+		PositionDAO positionDAO = new PositionDAO(pool, "task8_position");
 		FundPositionViewDAO fundPositionViewDAO = new FundPositionViewDAO(pool);
 		
 		OwnerFundsBean[] fundsOfOwener2 = fundPositionViewDAO.getFundPosition();
-		//System.out.println("hahahahahhaha ");
-		//System.out.println(fundsOfOwener2.length);
 		
 		List<OwnerFundsBean> ans2= new ArrayList<>();
         for(OwnerFundsBean fo: fundsOfOwener2) {
