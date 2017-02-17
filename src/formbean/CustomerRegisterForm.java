@@ -99,6 +99,9 @@ public class CustomerRegisterForm extends FormBean{
 		if (username == null || username.length() == 0) {
 			errors.add("Email is required!");
 		}
+		if (username.equals("jadmin")) {
+			errors.add("can't register as admin!");
+		}
 		if (lname == null || lname.length() == 0) {
 			errors.add("LastName is required!");
 		}
@@ -123,15 +126,16 @@ public class CustomerRegisterForm extends FormBean{
 		if (city == null || city.length() == 0) {
 			errors.add("city is required");
 		}
-		if (cash == null || cash.length() == 0) {
-			errors.add("cash is required");
-			
+		
+		if (cash == null && cash.length() == 0) {
+			cash = "0";
 		}
 		try {
 			double temp = Double.parseDouble(cash);
 		} catch (NumberFormatException e) {
 			errors.add("cash format is wrong!");
 		}
+		
 		if (errors.size() > 0) {
 			//System.out.println(errors.size());
 			return errors;
