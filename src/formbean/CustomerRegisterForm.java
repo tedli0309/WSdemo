@@ -127,11 +127,12 @@ public class CustomerRegisterForm extends FormBean{
 			errors.add("city is required");
 		}
 		
-		if (cash == null && cash.length() == 0) {
+		if (cash == null || cash.length() == 0) {
 			cash = "0";
 		}
 		try {
 			double temp = Double.parseDouble(cash);
+			if (temp < 0) errors.add("cash can't be negative");
 		} catch (NumberFormatException e) {
 			errors.add("cash format is wrong!");
 		}
