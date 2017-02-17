@@ -78,6 +78,7 @@ public class DepositCheckAction {
 			Transaction.commit();
 			return root;
 		}catch (RollbackException e) {
+			System.out.print(e.getMessage());
 			root.put("Message", "The input you provided is not valid");
 			return root;
 		}finally {
