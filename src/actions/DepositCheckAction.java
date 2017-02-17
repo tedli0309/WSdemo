@@ -42,7 +42,7 @@ public class DepositCheckAction {
         ObjectNode root = mapper.createObjectNode();  
 	    if (session.getAttribute("employee") == null) {
 			if(session.getAttribute("customer") != null) {
-				root.put("Message", "You must be a employee to perform this action");
+				root.put("Message", "You must be an employee to perform this action");
 			} else {
 				root.put("Message", "You are not currently logged in");
 			}
