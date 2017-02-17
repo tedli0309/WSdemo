@@ -1,7 +1,10 @@
 package actions;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -69,15 +72,23 @@ public class ViewPortfolio {
         	root.put("message", "You don't have any funds in your Portfolio");
         	return root;
         }
+        DecimalFormat df = new DecimalFormat("##0.00");
         root.put("message", "The action was successful");
-		root.put("cash", "" + user.getCash());
+		root.put("cash", "" + df.format(user.getCash()));
 		
 		ArrayNode fundsNode = mapper.createArrayNode();
+		
+		
         for (OwnerFundsBean oneFund : ans2) {
+
 			ObjectNode curFund = mapper.createObjectNode();
 			curFund.put("name", oneFund.getName());
-			curFund.put("shares", Double.toString(oneFund.getShares()));
-			curFund.put("price", oneFund.getPrice());
+			curFund.put("shares", Integer.toString(oneFund.getShares()));
+			String curPrice = oneFund.getPrice();
+			 
+			double priceFormat = Double.parseDouble(curPrice);
+			String output = df.format(priceFormat);
+			curFund.put("price", output);
 			fundsNode.add(curFund);			 
 			
         }
