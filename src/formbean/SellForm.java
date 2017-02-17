@@ -40,7 +40,10 @@ public class SellForm extends FormBean {
 		if(errors.size() > 0) return errors; // no need to further detect the errors anymore.
 
 		try{
-			Integer.parseInt(numShares);
+			int share = Integer.parseInt(numShares);
+			if(share <= 0){
+				throw new Exception();
+			}
 		}catch(Exception e) {
 			errors.add("Invalid cash value");
 		}
