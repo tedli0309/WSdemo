@@ -65,6 +65,7 @@ public class createCustomerAccountAction{
         newUser.setZip(form.getZip());
         newUser.setPassword(form.getPassword());
         newUser.setEmail(form.getEmail());
+        
         newUser.setCash(Double.parseDouble(form.getCash()));
         try {
     		ConnectionPool pool = new ConnectionPool("com.mysql.jdbc.Driver", "jdbc:mysql:///test?useSSL=false");
