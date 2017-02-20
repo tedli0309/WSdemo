@@ -136,6 +136,10 @@ public class CustomerRegisterForm extends FormBean{
 		} catch (NumberFormatException e) {
 			errors.add("cash format is wrong!");
 		}
+        int pointPos = cash.indexOf('.');        
+        if ((pointPos != -1) && (cash.length() - pointPos) > 3) {
+        	errors.add("the two decimal problem!");
+        } 
 		
 		if (errors.size() > 0) {
 			//System.out.println(errors.size());
