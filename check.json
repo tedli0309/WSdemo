@@ -2,7 +2,7 @@
   "config": {
     "target": "http://localhost:8080/WSdemo",
     "phases": [
-      {"duration": 10, "arrivalCount": 5}
+      {"duration": 10, "arrivalCount": 1}
     ],
     "payload": [
     {
@@ -316,7 +316,7 @@
        },
 	   {"post": {
         "url": "/buyFund",
-        "json": {"symbol":"{{{symbol}}}", "cashValue":"100"},
+        "json": {"symbol":"{{{symbol}}}", "cashValue":"300"},
         "match":{
           "json":"$.message",
           "value":"The fund has been successfully purchased"

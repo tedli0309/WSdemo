@@ -48,7 +48,7 @@ public class SellFundAction {
 		}
 				
 		if(session.getAttribute("customer") == null){
-			root.put("message", "Your are not currently logged in");
+			root.put("message", "You are not currently logged in");
 			return root;
 		}
 		

@@ -76,7 +76,7 @@ public class RequestCheckAction {
 			user.setCash(updateCash);
 			userDAO.update(user);
 			
-			root.put("message", "The check whas been successfully requested");
+			root.put("message", "The check has been successfully requested");
 			Transaction.commit();
 			return root;
 		}catch (RollbackException e) {
