@@ -73,14 +73,13 @@ public class DepositCheckAction {
 			double updateCash = currentCash + Double.parseDouble(checkForm.getCheckAmount());
 			customer.setCash(updateCash);
 			userDAO.update(customer);
-			
 			root.put("message", "The check was successfully deposited");
 			Transaction.commit();
 			return root;
 		}catch (RollbackException e) {
 			System.out.print(e.getMessage());
-			root.put("message", "The input you provided is not valid");
-			return root;
+			//root.put("message", "The input you provided is not valid");
+			return null;
 		}finally {
 			if (Transaction.isActive()) Transaction.rollback();
 		}	
