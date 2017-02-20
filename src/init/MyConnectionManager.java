@@ -2,6 +2,7 @@ package init;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import javax.servlet.ServletException;
 
 import org.genericdao.ConnectionPool;
 import org.genericdao.DAOException;
@@ -19,10 +20,10 @@ public class MyConnectionManager implements ServletContextListener {
 	public void contextInitialized(ServletContextEvent arg0) {
 		System.out.println("hello, xiaoyue");
 		// TODO Auto-generated method stub
-		ConnectionPool pool = new ConnectionPool("com.mysql.jdbc.Driver", "jdbc:mysql:///test?useSSL=false");
+		//ConnectionPool pool = new ConnectionPool("com.mysql.jdbc.Driver", "jdbc:mysql:///test?useSSL=false");
 		try {
-			userDAO  = new UserDAO(pool, "task8_user");
-		} catch (DAOException e) {
+			Model model = new Model(); 
+		} catch (ServletException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

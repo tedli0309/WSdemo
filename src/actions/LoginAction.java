@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import databean.UserBean;
 import formbean.LoginForm;
+import init.Model;
 import init.MyConnectionManager;
 import model.UserDAO;
 
@@ -40,8 +41,9 @@ public class LoginAction {
 		session.setAttribute("customer", null); 
 		session.setAttribute("employee", null);  
 		System.out.println(loginForm.toString());
-		ConnectionPool pool = new ConnectionPool("com.mysql.jdbc.Driver", "jdbc:mysql:///test?useSSL=false");
-		UserDAO userDAO  = new UserDAO(pool, "task8_user");
+		//ConnectionPool pool = new ConnectionPool("com.mysql.jdbc.Driver", "jdbc:mysql:///test?useSSL=false");
+		//UserDAO userDAO  = new UserDAO(pool, "task8_user");
+		UserDAO userDAO = Model.getUserDAO();
 		ObjectMapper mapper = new ObjectMapper();
 	    ObjectNode root = mapper.createObjectNode();  
 		List<String> errors = loginForm.getValidationErrors();
