@@ -10,12 +10,12 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
-<!--      <listener>
+      <listener>
       <listener-class>init.MyConnectionManager</listener-class>
    </listener>
-   <listener>
+<!--    <listener>
       <listener-class>init.MyLoggingModule</listener-class>
-   </listener> -->
+   </listener>  -->
   <servlet> 
       <servlet-name>demo Servlet name</servlet-name> 
       <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class> 
