@@ -24,14 +24,14 @@ import model.UserDAO;
 public class Model {
 	 
 	private static  UserDAO userDAO;
-	private FundDAO fundDAO;
+	private static FundDAO fundDAO;
 	//private EmployeeDAO employeeDAO;
-	private TransactionDAO  transactionDAO; 
-	private PositionDAO positionDAO;
+	private static TransactionDAO  transactionDAO; 
+	private static PositionDAO positionDAO;
 
 	//private FundPriceHistoryDAO fundPriceHistoryDAO;
 
-	private FundPositionViewDAO fundPositionViewDAO;
+	private static FundPositionViewDAO fundPositionViewDAO;
 	//private TransactionHistoryViewDAO transactionHistoryViewDAO;
 	public Model() throws ServletException {
 	//public Model(ServletConfig config) throws ServletException {
@@ -55,13 +55,13 @@ public class Model {
 		}
 	}
 	public static UserDAO getUserDAO()  { return userDAO; }
-//	public static FundDAO getFundDAO()  { return fundDAO; }
-//	public static TransactionDAO getTransactionDAO()  { return transactionDAO; }
+ 	public static FundDAO getFundDAO()  { return fundDAO; }
+	public static TransactionDAO getTransactionDAO()  { return transactionDAO; }
 	//public EmployeeDAO getEmployeeDAO()  { return employeeDAO; }
-//	public static PositionDAO getPositionDAO()  { return positionDAO; }
+	public static PositionDAO getPositionDAO()  { return positionDAO; }
 
 	//public FundPriceHistoryDAO getFundPriceHistoryDAO()  { return fundPriceHistoryDAO;}
-//	public static FundPositionViewDAO getFundPostionViewDAO() { return fundPositionViewDAO;}
+	public static FundPositionViewDAO getFundPostionViewDAO() { return fundPositionViewDAO;}
 	//public TransactionHistoryViewDAO getTransactionHistoryViewDAO() {	 
 	//	return transactionHistoryViewDAO;
 	//}
