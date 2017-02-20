@@ -1,5 +1,6 @@
 package formbean;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,6 +56,11 @@ public class  CreateFundForm extends FormBean{
 //            System.out.println("decimal value is there");
 //        else
 //            System.out.println("decimal value is not there");        
+        int pointPos = initial_value.indexOf('.');        
+        if ((pointPos != -1) && (initial_value.length() - pointPos) > 3) {
+        	errors.add("the two decimal problem!");
+        } 
+        
         
         if (value <= 0) {
             errors.add("Value is required!");
