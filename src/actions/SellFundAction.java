@@ -83,7 +83,7 @@ public class SellFundAction {
 			}
 			
 			if(position.getShares() < share) {
-				root.put("message", "You don't have sufficient funds in your account to cover the requested check");
+				root.put("message", "You don't have that many shares in your portfolio");
 				return root;
 			}
 	
@@ -91,6 +91,9 @@ public class SellFundAction {
 			user.setCash(user.getCash() + share * price);
 			
 			positionDAO.update(position);
+			if(position.getShares() == 0) {
+				positionDAO.delete(position.getUserId(), position.getFundId());
+			}
 			userDAO.update(user);
 			//transactionDAO.create(new TransactionBean(user.getUserId(), fund.getFundId(), System.currentTimeMillis(), amount/price ,"buy",amount));
 			Transaction.commit();
