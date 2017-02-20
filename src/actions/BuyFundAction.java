@@ -91,8 +91,9 @@ public class BuyFundAction {
 				positionDAO.create(position);
 			}
 			
-			user.setCash(balance - amount);			
-			position.setShares(position.getShares() +  (int)(amount/price));
+			int share = (int)(amount/price);
+			user.setCash(balance - share * price);			
+			position.setShares(position.getShares() +  share);
 			
 			positionDAO.update(position);
 			userDAO.update(user);
@@ -110,7 +111,7 @@ public class BuyFundAction {
 			if (Transaction.isActive()) Transaction.rollback();
 		}
 		
-		root.put("message", "exception");
+		//root.put("message", "exception");
 		return root;
 	}
 }
