@@ -32,6 +32,7 @@ import init.Model;
 import model.FundDAO;
 import model.FundPositionViewDAO;
 import model.PositionDAO;
+import model.UserDAO;
 
 @Path("/viewPortfolio")
 public class ViewPortfolio {
@@ -41,7 +42,7 @@ public class ViewPortfolio {
 	@GET
 	@Consumes(MediaType.APPLICATION_JSON) 
 	@Produces(MediaType.APPLICATION_JSON)
-	public ObjectNode viewPortfolio() throws DAOException, RollbackException {
+	public ObjectNode viewPortfolio() {
 		System.out.println("entered the viewPortfolio");
 		HttpSession session = request.getSession();
 		ObjectMapper mapper = new ObjectMapper();
@@ -57,44 +58,52 @@ public class ViewPortfolio {
 		UserBean user = (UserBean) session.getAttribute("customer");
 		
 		//ConnectionPool pool = new ConnectionPool("com.mysql.jdbc.Driver", "jdbc:mysql:///test?useSSL=false");
-		PositionDAO positionDAO = Model.getPositionDAO();
+		//PositionDAO positionDAO = Model.getPositionDAO();
 		FundPositionViewDAO fundPositionViewDAO = Model.getFundPostionViewDAO();
+		UserDAO userDAO = Model.getUserDAO();
+		OwnerFundsBean[] fundsOfOwener2;
 		
-		OwnerFundsBean[] fundsOfOwener2 = fundPositionViewDAO.getFundPosition();
-		
-		List<OwnerFundsBean> ans2= new ArrayList<>();
-        for(OwnerFundsBean fo: fundsOfOwener2) {
-        	System.out.println(fo.toString());
-        	 if(fo.getUserId() == user.getUserId())
-        		 ans2.add(fo);
-        }
-		
-        if (ans2.size() == 0) {
-        	root.put("message", "You don't have any funds in your Portfolio");
-        	return root;
-        }
-        DecimalFormat df = new DecimalFormat("##0.00");
-        root.put("message", "The action was successful");
-		root.put("cash", "" + df.format(user.getCash()));
-		
-		ArrayNode fundsNode = mapper.createArrayNode();
-		
-		
-        for (OwnerFundsBean oneFund : ans2) {
-
-			ObjectNode curFund = mapper.createObjectNode();
-			curFund.put("name", oneFund.getName());
-			curFund.put("shares", Integer.toString(oneFund.getShares()));
-			String curPrice = oneFund.getPrice();
-			 
-			double priceFormat = Double.parseDouble(curPrice);
-			String output = df.format(priceFormat);
-			curFund.put("price", output);
-			fundsNode.add(curFund);			 
+		try {
+			Transaction.begin();
+			user = userDAO.read(user.getUserId());
+			fundsOfOwener2 = fundPositionViewDAO.getFundPosition();			
+			Transaction.commit();
+			List<OwnerFundsBean> ans2= new ArrayList<>();
+	        for(OwnerFundsBean fo: fundsOfOwener2) {
+	        	System.out.println(fo.toString());
+	        	 if(fo.getUserId() == user.getUserId())
+	        		 ans2.add(fo);
+	        }			
+	        if (ans2.size() == 0) {
+	        	root.put("message", "You don't have any funds in your Portfolio");
+	        	return root;
+	        }
+	        DecimalFormat df = new DecimalFormat("##0.00");
+	        root.put("message", "The action was successful");
+			root.put("cash", "" + df.format(user.getCash()));
 			
-        }
-        root.set("funds", fundsNode);
-		
-		return root;
+			ArrayNode fundsNode = mapper.createArrayNode();
+			
+			
+	        for (OwnerFundsBean oneFund : ans2) {
+				ObjectNode curFund = mapper.createObjectNode();
+				curFund.put("name", oneFund.getName());
+				curFund.put("shares", Integer.toString(oneFund.getShares()));
+				String curPrice = oneFund.getPrice();
+				 
+				double priceFormat = Double.parseDouble(curPrice);
+				String output = df.format(priceFormat);
+				curFund.put("price", output);
+				fundsNode.add(curFund);			 
+	        }
+	        root.set("funds", fundsNode);
+			
+			return root;
+		}  catch (RollbackException e2){
+			System.out.println("transaction error message");			
+		} finally {
+			if (Transaction.isActive()) Transaction.rollback();
+		}
+		return null;	
 	}
 }

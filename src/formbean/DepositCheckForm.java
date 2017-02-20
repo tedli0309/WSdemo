@@ -46,6 +46,10 @@ public class DepositCheckForm extends FormBean{
 		} catch(Exception e) {
 			errors.add("Please enter valid amount value.");
 		}
+        int pointPos = cash.indexOf('.');        
+        if ((pointPos != -1) && (cash.length() - pointPos) > 3) {
+        	errors.add("the two decimal problem!");
+        } 
 		
 		if (username.matches(".*[<>\"].*"))
 			errors.add("UserName may not contain angle brackets or quotes");
