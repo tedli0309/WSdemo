@@ -62,24 +62,26 @@ public class RequestCheckAction {
 		
 		UserBean customer = (UserBean) session.getAttribute("customer");
 		Double requestAmount = Double.parseDouble(checkForm.getCashValue());
+		
 		try {
 			Transaction.begin();
-			double currentCash = customer.getCash();
+			UserBean user = userDAO.read(customer.getUserId());
+			double currentCash = user.getCash();
 			if (currentCash < requestAmount) {
 				root.put("message", "You don't have sufficient funds in your account to cover the requested check");
 				return root;
 			}
-			
 			double updateCash = currentCash - requestAmount;
-			customer.setCash(updateCash);
-			userDAO.update(customer);
+			
+			user.setCash(updateCash);
+			userDAO.update(user);
 			
 			root.put("message", "The check whas been successfully requested");
 			Transaction.commit();
 			return root;
 		}catch (RollbackException e) {
-			root.put("message", "You don't have sufficient funds in your account to cover the requested check");
-			return root;
+			//root.put("message", "You don't have sufficient funds in your account to cover the requested check");
+			return null;
 		}finally {
 			if (Transaction.isActive()) Transaction.rollback();
 		}
