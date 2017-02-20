@@ -28,6 +28,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import databean.FundBean;
 import databean.OwnerFundsBean;
 import databean.UserBean;
+import init.Model;
 import model.FundDAO;
 import model.FundPositionViewDAO;
 import model.PositionDAO;
@@ -55,9 +56,9 @@ public class ViewPortfolio {
 		
 		UserBean user = (UserBean) session.getAttribute("customer");
 		
-		ConnectionPool pool = new ConnectionPool("com.mysql.jdbc.Driver", "jdbc:mysql:///test?useSSL=false");
-		PositionDAO positionDAO = new PositionDAO(pool, "task8_position");
-		FundPositionViewDAO fundPositionViewDAO = new FundPositionViewDAO(pool);
+		//ConnectionPool pool = new ConnectionPool("com.mysql.jdbc.Driver", "jdbc:mysql:///test?useSSL=false");
+		PositionDAO positionDAO = Model.getPositionDAO();
+		FundPositionViewDAO fundPositionViewDAO = Model.getFundPostionViewDAO();
 		
 		OwnerFundsBean[] fundsOfOwener2 = fundPositionViewDAO.getFundPosition();
 		

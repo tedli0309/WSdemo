@@ -28,7 +28,7 @@ import databean.TransactionBean;
 import databean.UserBean;
 import formbean.BuyForm;
 import formbean.SellForm;
-
+import init.*;
 
 @Path("/sellFund")
 public class SellFundAction {
@@ -58,11 +58,11 @@ public class SellFundAction {
 		}
 		
 		try {
-			ConnectionPool pool = new ConnectionPool("com.mysql.jdbc.Driver", "jdbc:mysql:///test?useSSL=false");
-			TransactionDAO transactionDAO = new TransactionDAO(pool, "task8_transaction");
-			PositionDAO positionDAO = new PositionDAO(pool, "task8_position");
-			UserDAO userDAO = new UserDAO(pool, "task8_user");
-			FundDAO fundDAO = new FundDAO(pool, "task8_fund");
+			//ConnectionPool pool = new ConnectionPool("com.mysql.jdbc.Driver", "jdbc:mysql:///test?useSSL=false");
+			TransactionDAO transactionDAO = Model.getTransactionDAO();
+			PositionDAO positionDAO = Model.getPositionDAO();
+			UserDAO userDAO = Model.getUserDAO();
+			FundDAO fundDAO = Model.getFundDAO();
 			
 			
 			Transaction.begin();
@@ -99,10 +99,7 @@ public class SellFundAction {
 			Transaction.commit();
 			root.put("message", "The shares have been successfully sold");
 			return root;
-		} catch (DAOException e1) {
-			e1.printStackTrace();
-			
-		} catch (RollbackException e) {
+		}  catch (RollbackException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {

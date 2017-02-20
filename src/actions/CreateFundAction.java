@@ -27,6 +27,7 @@ import databean.FundBean;
 import databean.UserBean;
 import formbean.CreateFundForm;
 import formbean.LoginForm;
+import init.Model;
 import model.FundDAO;
 
 @Path("/createFund")
@@ -40,8 +41,9 @@ public class CreateFundAction {
 	@Produces(MediaType.APPLICATION_JSON)
 	public ObjectNode createFund(CreateFundForm fundForm)  {
 		try{
-		ConnectionPool pool = new ConnectionPool("com.mysql.jdbc.Driver", "jdbc:mysql:///test?useSSL=false");
-		FundDAO fundDAO  = new FundDAO(pool, "task8_fund");
+			//ConnectionPool pool = new ConnectionPool("com.mysql.jdbc.Driver", "jdbc:mysql:///test?useSSL=false");
+			//FundDAO fundDAO  = new FundDAO(pool, "task8_fund");
+	        FundDAO fundDAO = Model.getFundDAO();
 		
 		Transaction.begin();
 		HttpSession session = request.getSession();
@@ -49,9 +51,9 @@ public class CreateFundAction {
         ObjectNode root = mapper.createObjectNode();
 		if (session.getAttribute("employee") == null) {
 			if(session.getAttribute("customer") != null) {
-				root.put("Message", "You must be an employee to perform this action");
+				root.put("message", "You must be an employee to perform this action");
 			} else {
-				root.put("Message", "You are not currently logged in");
+				root.put("message", "You are not currently logged in");
 			}
 			return root;
 		}
@@ -69,19 +71,16 @@ public class CreateFundAction {
 		}
 		
 		if(errors.size() !=0) {
-			root.put("Message", "The input you provided is not valid");
+			root.put("message", "The input you provided is not valid");
 			return root;
 		}
 		FundBean bean = new FundBean(fundForm.getName(), fundForm.getSymbol(), fundForm.getInitial_value());
 		fundDAO.create(bean);
 		
-		root.put("Message", "Fund successfully created");
+		root.put("message", "Fund successfully created");
 		
 		Transaction.commit();
 		return root;
-	}catch(DAOException e){
-		e.printStackTrace();
-		return null;
 	}catch(RollbackException e){
 		e.printStackTrace();
 		return null;
