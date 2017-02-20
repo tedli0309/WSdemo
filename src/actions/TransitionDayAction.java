@@ -22,7 +22,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import databean.FundBean;
 import formbean.CreateFundForm;
 import model.FundDAO;
-import model.*;
+//import model.*;
+import init.*;
 
 @Path("/transitionDay")
 public class TransitionDayAction {
@@ -37,18 +38,18 @@ public class TransitionDayAction {
 			ObjectMapper mapper = new ObjectMapper();
 	        ObjectNode root = mapper.createObjectNode();
 	        
-	        ConnectionPool pool = new ConnectionPool("com.mysql.jdbc.Driver", "jdbc:mysql:///test?useSSL=false");
-			FundDAO fundDAO  = new FundDAO(pool, "task8_fund");
-			TransactionDAO transactionDAO = new TransactionDAO(pool, "task8_transaction");
+	        //ConnectionPool pool = new ConnectionPool("com.mysql.jdbc.Driver", "jdbc:mysql:///test?useSSL=false");
+			//FundDAO fundDAO  = new FundDAO(pool, "task8_fund");
+	        FundDAO fundDAO = Model.getFundDAO();
 			double price,seed,value=0;
 			Random rand = new Random();
 			Transaction.begin();
 			HttpSession session = request.getSession();
 			if (session.getAttribute("employee") == null) {
 				if(session.getAttribute("customer") != null) {
-					root.put("Message", "You must be an employee to perform this action");
+					root.put("message", "You must be an employee to perform this action");
 				} else {
-					root.put("Message", "You are not currently logged in");
+					root.put("message", "You are not currently logged in");
 				}
 				return root;
 			}
@@ -65,7 +66,7 @@ public class TransitionDayAction {
 				fund.setPrice(Double.toString(price));
 				fundDAO.update(fund);
 			}
-			root.put("Message", "The fund prices have been successfully recalculated");
+			root.put("message", "The fund prices have been successfully recalculated");
 			Transaction.commit();
 			return root;
 		}catch(Exception e) {

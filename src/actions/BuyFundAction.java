@@ -27,7 +27,7 @@ import databean.PositionBean;
 import databean.TransactionBean;
 import databean.UserBean;
 import formbean.BuyForm;
-
+import init.*;
 @Path("/buyFund")
 public class BuyFundAction {
 	@Context 
@@ -56,11 +56,11 @@ public class BuyFundAction {
 		}
 		
 		try {
-			ConnectionPool pool = new ConnectionPool("com.mysql.jdbc.Driver", "jdbc:mysql:///test?useSSL=false");
+			//ConnectionPool pool = new ConnectionPool("com.mysql.jdbc.Driver", "jdbc:mysql:///test?useSSL=false");
 			//TransactionDAO transactionDAO = new TransactionDAO(pool, "task8_transaction");
-			PositionDAO positionDAO = new PositionDAO(pool, "task8_position");
-			UserDAO userDAO = new UserDAO(pool, "task8_user");
-			FundDAO fundDAO = new FundDAO(pool, "task8_fund");
+			PositionDAO positionDAO = Model.getPositionDAO();
+			UserDAO userDAO = Model.getUserDAO();
+			FundDAO fundDAO = Model.getFundDAO();
 			
 			
 			Transaction.begin();
@@ -101,10 +101,7 @@ public class BuyFundAction {
 			Transaction.commit();
 			root.put("message", "The fund has been successfully purchased");
 			return root;
-		} catch (DAOException e1) {
-			e1.printStackTrace();
-			
-		} catch (RollbackException e) {
+		}  catch (RollbackException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {

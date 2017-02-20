@@ -10,8 +10,7 @@ import org.genericdao.RollbackException;
 import org.genericdao.Transaction;
 
 import databean.UserBean;
-import formbean.ChangePwdForm;
-import formbean.ResetPwdForm;
+
 
 public class UserDAO extends GenericDAO<UserBean> {
 
@@ -43,60 +42,60 @@ public class UserDAO extends GenericDAO<UserBean> {
 		}
 
 	}
-    public UserBean setPassword(String Email, ChangePwdForm form) 
-    			throws RollbackException {
-        try {
-        	
-        	UserBean dbUser = read(Email);
-        	
-        	String d1 = computeDigest(dbUser);
-        	
-            if (dbUser == null) {
-                throw new RollbackException("User " + Email + " does not exists!");
-            }
-            System.out.println("2");
-            
-            
-            String d2 = computeDigest(dbUser);
-            if(!d1.equals(d2)) {
-            	return null;
-            }
-            if (form.getOldPassword()!= dbUser.getPassword() ) {
-           	 throw new RollbackException("The old password is not correct!");
-           }
-            Transaction.begin();
-            
-            dbUser.setPassword(form.getConfirmPassword());
-             
-            super.update(dbUser);
-          
-            Transaction.commit();
-        
-            return dbUser;
-        } finally {
-            if (Transaction.isActive()) Transaction.rollback();
-        }
-    }
-    public UserBean setPasswordByEmployee(String UserName, ResetPwdForm form) 
-			throws RollbackException {
-    try {
-    	UserBean dbUser = read(UserName);
-        Transaction.begin();
-        if (dbUser == null) {
-            throw new RollbackException("User " + UserName + " no longer exists!");
-        }
-        
-        dbUser.setPassword(form.getConfirmPassword());
-         
-        super.update(dbUser);
-      
-        Transaction.commit();
-    
-        return dbUser;
-    } finally {
-        if (Transaction.isActive()) Transaction.rollback();
-    }
-}
+//    public UserBean setPassword(String Email, ChangePwdForm form) 
+//    			throws RollbackException {
+//        try {
+//        	
+//        	UserBean dbUser = read(Email);
+//        	
+//        	String d1 = computeDigest(dbUser);
+//        	
+//            if (dbUser == null) {
+//                throw new RollbackException("User " + Email + " does not exists!");
+//            }
+//            System.out.println("2");
+//            
+//            
+//            String d2 = computeDigest(dbUser);
+//            if(!d1.equals(d2)) {
+//            	return null;
+//            }
+//            if (form.getOldPassword()!= dbUser.getPassword() ) {
+//           	 throw new RollbackException("The old password is not correct!");
+//           }
+//            Transaction.begin();
+//            
+//            dbUser.setPassword(form.getConfirmPassword());
+//             
+//            super.update(dbUser);
+//          
+//            Transaction.commit();
+//        
+//            return dbUser;
+//        } finally {
+//            if (Transaction.isActive()) Transaction.rollback();
+//        }
+//    }
+//    public UserBean setPasswordByEmployee(String UserName, ResetPwdForm form) 
+//			throws RollbackException {
+//    try {
+//    	UserBean dbUser = read(UserName);
+//        Transaction.begin();
+//        if (dbUser == null) {
+//            throw new RollbackException("User " + UserName + " no longer exists!");
+//        }
+//        
+//        dbUser.setPassword(form.getConfirmPassword());
+//         
+//        super.update(dbUser);
+//      
+//        Transaction.commit();
+//    
+//        return dbUser;
+//    } finally {
+//        if (Transaction.isActive()) Transaction.rollback();
+//    }
+//}
     public UserBean[] getUsers() throws RollbackException {
     	Transaction.begin();
         UserBean[] users = match();

@@ -30,6 +30,10 @@ public class RequestCheckForm extends FormBean{
 		} catch(Exception e) {
 			errors.add("Please enter valid amount value.");
 		}
+        int pointPos = cashValue.indexOf('.');        
+        if ((pointPos != -1) && (cashValue.length() - pointPos) > 3) {
+        	errors.add("the two decimal problem!");
+        } 
 		
 		if (cashValue.matches(".*[<>\"].*"))
 			errors.add("CheckAmount may not contain angle brackets or quotes");

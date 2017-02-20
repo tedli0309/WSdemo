@@ -48,6 +48,10 @@ public class BuyForm extends FormBean {
 		}catch(Exception e) {
 			errors.add("Invalid cash value");
 		}
+        int pointPos = cashValue.indexOf('.');        
+        if ((pointPos != -1) && (cashValue.length() - pointPos) > 3) {
+        	errors.add("the two decimal problem!");
+        } 
 		
 		return errors;
     }

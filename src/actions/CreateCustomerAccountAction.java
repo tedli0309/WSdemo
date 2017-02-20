@@ -24,9 +24,9 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import databean.UserBean;
 import formbean.CustomerRegisterForm;
 import model.UserDAO;
-
+import init.*;
 @Path("/createCustomerAccount")
-public class CreateCustomerAccountAction{
+public class createCustomerAccountAction{
 	@Context 
 	HttpServletRequest request;
 	
@@ -34,7 +34,7 @@ public class CreateCustomerAccountAction{
 	@Consumes(MediaType.APPLICATION_JSON) 
 	@Produces(MediaType.APPLICATION_JSON)
 	public ObjectNode createAccount(CustomerRegisterForm form) 
-			throws DAOException, RollbackException {
+			throws RollbackException {
 		System.out.println("entered the createCustomerAccount");
 		HttpSession session = request.getSession();
 		ObjectMapper mapper = new ObjectMapper();
@@ -68,8 +68,8 @@ public class CreateCustomerAccountAction{
         
         newUser.setCash(Double.parseDouble(form.getCash()));
         try {
-    		ConnectionPool pool = new ConnectionPool("com.mysql.jdbc.Driver", "jdbc:mysql:///test?useSSL=false");
-    		UserDAO userDAO  = new UserDAO(pool, "task8_user");
+    		//ConnectionPool pool = new ConnectionPool("com.mysql.jdbc.Driver", "jdbc:mysql:///test?useSSL=false");
+    		UserDAO userDAO  = Model.getUserDAO();
             userDAO.create(newUser);            
             root.put("message", newUser.getFirstName() + " was registered succesfully");
             return root;
