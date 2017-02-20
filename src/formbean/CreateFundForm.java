@@ -50,6 +50,12 @@ public class  CreateFundForm extends FormBean{
         }catch(NumberFormatException e) {
         	errors.add("Value should be a number!");
         }
+//        double d = 14.4;
+//        if((d-(int)d)!=0)
+//            System.out.println("decimal value is there");
+//        else
+//            System.out.println("decimal value is not there");        
+        
         if (value <= 0) {
             errors.add("Value is required!");
         }
