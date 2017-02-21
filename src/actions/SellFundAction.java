@@ -81,8 +81,6 @@ public class SellFundAction {
 			double price = Double.parseDouble(fund.getPrice());
 			PositionBean position = positionDAO.getPosition(user.getUserId(), fund.getFundId());
 			if(position == null) {
-				//position = new PositionBean(user.getUserId(), fund.getFundId(), 0);
-				//positionDAO.create(position);
 				root.put("message", "You don't have that many shares in your portfolio");
 				return root;
 			}
@@ -106,7 +104,6 @@ public class SellFundAction {
 			root.put("message", "The shares have been successfully sold");
 			return root;
 		}  catch (RollbackException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			if (Transaction.isActive()) Transaction.rollback();
