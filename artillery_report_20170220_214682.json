@@ -1,0 +1,122 @@
+{
+  "aggregate": {
+    "timestamp": "2017-02-21T02:46:42.556Z",
+    "scenariosCreated": 1,
+    "scenariosCompleted": 0,
+    "requestsCompleted": 1,
+    "latency": {
+      "min": 42.5,
+      "max": 42.5,
+      "median": 42.5,
+      "p95": null,
+      "p99": null
+    },
+    "rps": {
+      "count": 1,
+      "mean": 2.22
+    },
+    "scenarioDuration": {
+      "min": null,
+      "max": null,
+      "median": null,
+      "p95": null,
+      "p99": null
+    },
+    "scenarioCounts": {
+      "web service task sample test plan": 1
+    },
+    "errors": {
+      "Failed match": 1
+    },
+    "codes": {
+      "200": 1
+    },
+    "matches": 0,
+    "customStats": {},
+    "phases": [
+      {
+        "duration": 10,
+        "arrivalCount": 1
+      }
+    ]
+  },
+  "intermediate": [
+    {
+      "timestamp": "2017-02-21T02:46:40.325Z",
+      "scenariosCreated": 0,
+      "scenariosCompleted": 0,
+      "requestsCompleted": 0,
+      "latency": {
+        "min": null,
+        "max": null,
+        "median": null,
+        "p95": null,
+        "p99": null
+      },
+      "rps": {
+        "count": 0,
+        "mean": null
+      },
+      "scenarioDuration": {
+        "min": null,
+        "max": null,
+        "median": null,
+        "p95": null,
+        "p99": null
+      },
+      "scenarioCounts": {},
+      "errors": {},
+      "codes": {},
+      "matches": 0,
+      "latencies": [],
+      "customStats": {},
+      "concurrency": 0,
+      "pendingRequests": 0
+    },
+    {
+      "timestamp": "2017-02-21T02:46:42.548Z",
+      "scenariosCreated": 1,
+      "scenariosCompleted": 0,
+      "requestsCompleted": 1,
+      "latency": {
+        "min": 42.5,
+        "max": 42.5,
+        "median": 42.5,
+        "p95": null,
+        "p99": null
+      },
+      "rps": {
+        "count": 1,
+        "mean": 2.27
+      },
+      "scenarioDuration": {
+        "min": null,
+        "max": null,
+        "median": null,
+        "p95": null,
+        "p99": null
+      },
+      "scenarioCounts": {
+        "web service task sample test plan": 1
+      },
+      "errors": {
+        "Failed match": 1
+      },
+      "codes": {
+        "200": 1
+      },
+      "matches": 0,
+      "latencies": [
+        [
+          1487645202152,
+          "308feb1f-ae26-40f4-822d-7358d0b56c67",
+          42495939,
+          200
+        ]
+      ],
+      "customStats": {},
+      "concurrency": 1,
+      "pendingRequests": 0
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "config": {
+    "http": {
+		"pool":2000
+	},
+	
+    "target": "http://localhost:8080/WSdemo",
+    "phases": [
+      {"duration": 60, "arrivalRate": 5000}
+    ],
+    "payload": [
+    {
+      "path": "UserData.csv",
+      "fields": ["fname","lname","address","city","state","zip","email","username", "password"],
+      "order": "sequence"
+    },
+    {
+      "path": "Portfolio.csv",
+      "fields": ["name","symbol","initial_value"],
+      "order": "sequence"
+    }
+  ]
+  },
+  "scenarios": [
+    {
+      "name": "web service task sample test plan",
+      "flow": [
+        {"post": {
+          "url": "/login",
+          "json": {"username":"jadmin","password":"admin"},
+          "match":{
+            "json":"$.message",
+            "value":"Welcome Jane"
+             }
+           }
+         },
+       {"post": {
+            "url": "/logout",
+            "match":{
+              "json":"$.message",
+              "value":"You have been successfully logged out"
+            }
+           }
+         }
+     ]
+    }
+  ]
+}

@@ -34,7 +34,7 @@ public class RequestCheckAction {
 	@Produces(MediaType.APPLICATION_JSON)
 	public ObjectNode requestCheck(RequestCheckForm checkForm) throws DAOException, RollbackException {
 		//ConnectionPool pool = new ConnectionPool("com.mysql.jdbc.Driver", "jdbc:mysql:///test?useSSL=false");
-		UserDAO userDAO  = Model.getUserDAO();
+		
 
 		HttpSession session = request.getSession();
 		ObjectMapper mapper = new ObjectMapper();
@@ -65,6 +65,7 @@ public class RequestCheckAction {
 		
 		try {
 			Transaction.begin();
+			UserDAO userDAO  = Model.getUserDAO();
 			UserBean user = userDAO.read(customer.getUserId());
 			double currentCash = user.getCash();
 			if (currentCash < requestAmount) {
@@ -76,7 +77,7 @@ public class RequestCheckAction {
 			user.setCash(updateCash);
 			userDAO.update(user);
 			
-			root.put("message", "The check whas been successfully requested");
+			root.put("message", "The check has been successfully requested");
 			Transaction.commit();
 			return root;
 		}catch (RollbackException e) {

@@ -1,0 +1,320 @@
+{
+  "aggregate": {
+    "timestamp": "2017-02-21T02:32:27.168Z",
+    "scenariosCreated": 1,
+    "scenariosCompleted": 0,
+    "requestsCompleted": 34,
+    "latency": {
+      "min": 1.3,
+      "max": 93.1,
+      "median": 2.3,
+      "p95": 68.6,
+      "p99": null
+    },
+    "rps": {
+      "count": 34,
+      "mean": 33.66
+    },
+    "scenarioDuration": {
+      "min": null,
+      "max": null,
+      "median": null,
+      "p95": null,
+      "p99": null
+    },
+    "scenarioCounts": {
+      "web service task sample test plan": 1
+    },
+    "errors": {
+      "Failed match": 1
+    },
+    "codes": {
+      "200": 34
+    },
+    "matches": 33,
+    "customStats": {},
+    "phases": [
+      {
+        "duration": 10,
+        "arrivalCount": 1
+      }
+    ]
+  },
+  "intermediate": [
+    {
+      "timestamp": "2017-02-21T02:32:24.721Z",
+      "scenariosCreated": 0,
+      "scenariosCompleted": 0,
+      "requestsCompleted": 0,
+      "latency": {
+        "min": null,
+        "max": null,
+        "median": null,
+        "p95": null,
+        "p99": null
+      },
+      "rps": {
+        "count": 0,
+        "mean": null
+      },
+      "scenarioDuration": {
+        "min": null,
+        "max": null,
+        "median": null,
+        "p95": null,
+        "p99": null
+      },
+      "scenarioCounts": {},
+      "errors": {},
+      "codes": {},
+      "matches": 0,
+      "latencies": [],
+      "customStats": {},
+      "concurrency": 0,
+      "pendingRequests": 0
+    },
+    {
+      "timestamp": "2017-02-21T02:32:27.160Z",
+      "scenariosCreated": 1,
+      "scenariosCompleted": 0,
+      "requestsCompleted": 34,
+      "latency": {
+        "min": 1.3,
+        "max": 93.1,
+        "median": 2.3,
+        "p95": 68.6,
+        "p99": null
+      },
+      "rps": {
+        "count": 34,
+        "mean": 34
+      },
+      "scenarioDuration": {
+        "min": null,
+        "max": null,
+        "median": null,
+        "p95": null,
+        "p99": null
+      },
+      "scenarioCounts": {
+        "web service task sample test plan": 1
+      },
+      "errors": {
+        "Failed match": 1
+      },
+      "codes": {
+        "200": 34
+      },
+      "matches": 33,
+      "latencies": [
+        [
+          1487644346191,
+          "468ca229-ac91-45de-a2e3-d1726c8f95a7",
+          27504298,
+          200
+        ],
+        [
+          1487644346213,
+          "468ca229-ac91-45de-a2e3-d1726c8f95a7",
+          3642405,
+          200
+        ],
+        [
+          1487644346220,
+          "468ca229-ac91-45de-a2e3-d1726c8f95a7",
+          2593094,
+          200
+        ],
+        [
+          1487644346225,
+          "468ca229-ac91-45de-a2e3-d1726c8f95a7",
+          1574572,
+          200
+        ],
+        [
+          1487644346232,
+          "468ca229-ac91-45de-a2e3-d1726c8f95a7",
+          1866182,
+          200
+        ],
+        [
+          1487644346236,
+          "468ca229-ac91-45de-a2e3-d1726c8f95a7",
+          1345752,
+          200
+        ],
+        [
+          1487644346240,
+          "468ca229-ac91-45de-a2e3-d1726c8f95a7",
+          1551630,
+          200
+        ],
+        [
+          1487644346245,
+          "468ca229-ac91-45de-a2e3-d1726c8f95a7",
+          2582830,
+          200
+        ],
+        [
+          1487644346251,
+          "468ca229-ac91-45de-a2e3-d1726c8f95a7",
+          1700755,
+          200
+        ],
+        [
+          1487644346256,
+          "468ca229-ac91-45de-a2e3-d1726c8f95a7",
+          2620865,
+          200
+        ],
+        [
+          1487644346263,
+          "468ca229-ac91-45de-a2e3-d1726c8f95a7",
+          2474759,
+          200
+        ],
+        [
+          1487644346267,
+          "468ca229-ac91-45de-a2e3-d1726c8f95a7",
+          1468312,
+          200
+        ],
+        [
+          1487644346275,
+          "468ca229-ac91-45de-a2e3-d1726c8f95a7",
+          2898589,
+          200
+        ],
+        [
+          1487644346282,
+          "468ca229-ac91-45de-a2e3-d1726c8f95a7",
+          2152358,
+          200
+        ],
+        [
+          1487644346289,
+          "468ca229-ac91-45de-a2e3-d1726c8f95a7",
+          2018930,
+          200
+        ],
+        [
+          1487644346385,
+          "468ca229-ac91-45de-a2e3-d1726c8f95a7",
+          93069407,
+          200
+        ],
+        [
+          1487644346412,
+          "468ca229-ac91-45de-a2e3-d1726c8f95a7",
+          2830365,
+          200
+        ],
+        [
+          1487644346417,
+          "468ca229-ac91-45de-a2e3-d1726c8f95a7",
+          1785280,
+          200
+        ],
+        [
+          1487644346474,
+          "468ca229-ac91-45de-a2e3-d1726c8f95a7",
+          53285501,
+          200
+        ],
+        [
+          1487644346486,
+          "468ca229-ac91-45de-a2e3-d1726c8f95a7",
+          5682467,
+          200
+        ],
+        [
+          1487644346492,
+          "468ca229-ac91-45de-a2e3-d1726c8f95a7",
+          2765161,
+          200
+        ],
+        [
+          1487644346498,
+          "468ca229-ac91-45de-a2e3-d1726c8f95a7",
+          2746445,
+          200
+        ],
+        [
+          1487644346574,
+          "468ca229-ac91-45de-a2e3-d1726c8f95a7",
+          72433940,
+          200
+        ],
+        [
+          1487644346579,
+          "468ca229-ac91-45de-a2e3-d1726c8f95a7",
+          3149144,
+          200
+        ],
+        [
+          1487644346628,
+          "468ca229-ac91-45de-a2e3-d1726c8f95a7",
+          46941327,
+          200
+        ],
+        [
+          1487644346631,
+          "468ca229-ac91-45de-a2e3-d1726c8f95a7",
+          1308319,
+          200
+        ],
+        [
+          1487644346638,
+          "468ca229-ac91-45de-a2e3-d1726c8f95a7",
+          1425446,
+          200
+        ],
+        [
+          1487644346642,
+          "468ca229-ac91-45de-a2e3-d1726c8f95a7",
+          1357827,
+          200
+        ],
+        [
+          1487644346647,
+          "468ca229-ac91-45de-a2e3-d1726c8f95a7",
+          1984516,
+          200
+        ],
+        [
+          1487644346652,
+          "468ca229-ac91-45de-a2e3-d1726c8f95a7",
+          1570346,
+          200
+        ],
+        [
+          1487644346656,
+          "468ca229-ac91-45de-a2e3-d1726c8f95a7",
+          1695322,
+          200
+        ],
+        [
+          1487644346661,
+          "468ca229-ac91-45de-a2e3-d1726c8f95a7",
+          1653663,
+          200
+        ],
+        [
+          1487644346665,
+          "468ca229-ac91-45de-a2e3-d1726c8f95a7",
+          1439937,
+          200
+        ],
+        [
+          1487644346673,
+          "468ca229-ac91-45de-a2e3-d1726c8f95a7",
+          3095411,
+          200
+        ]
+      ],
+      "customStats": {},
+      "concurrency": 1,
+      "pendingRequests": 0
+    }
+  ]
+}

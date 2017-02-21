@@ -18,30 +18,31 @@ public class UserDAO extends GenericDAO<UserBean> {
 		super(UserBean.class, tableName, connectionPool);
 	}
 	
-	public UserBean read(String userName) throws RollbackException {
+	/*public UserBean read(String userName) throws RollbackException {
 		//try	{
 			//Transaction.begin();
-			UserBean[] res =  match(MatchArg.equals("userName",userName));
-			if (res.length == 0)  return null;
+			
 			//Transaction.commit();
 			return res[0];
 		//} finally {
 			//if (Transaction.isActive()) Transaction.rollback();
 		//}
-	}
+	}*/
 	
-	public void create(UserBean user) throws RollbackException {		
+/*	public void create(UserBean user) {		
 		try {
-			Transaction.begin();
-			UserBean[] u =	match(MatchArg.equals("userName",user.getUserName()));
-			if (u.length > 0) throw new DuplicateKeyException("this UserName has been used!");
+			//Transaction.begin();
+			
 			super.create(user);
-			Transaction.commit();
+			//Transaction.commit();
+		} catch (DuplicateKeyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} finally {
 			if (Transaction.isActive()) Transaction.rollback();
 		}
 
-	}
+	}*/
 //    public UserBean setPassword(String Email, ChangePwdForm form) 
 //    			throws RollbackException {
 //        try {

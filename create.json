@@ -1,0 +1,45 @@
+{
+  "config": {
+    "target": "http://localhost:8080/WSdemo",
+    "phases": [
+      {"duration": 10, "arrivalCount": 7}
+    ],
+    "payload": [
+    {
+      "path": "UserData.csv",
+      "fields": ["fname","lname","address","city","state","zip","email","username", "password"],
+      "order": "sequence"
+    },
+    {
+      "path": "Portfolio.csv",
+      "fields": ["name","symbol","initial_value"],
+      "order": "sequence"
+    }
+  ]
+  },
+  "scenarios": [
+    {
+      "name": "web service task sample test plan",
+      "flow": [
+      {"post": {
+          "url": "/login",
+          "json": {"username":"jadmin","password":"admin"},
+          "match":{
+            "json":"$.message",
+            "value":"Welcome Jane"
+             }
+           }
+         },
+		 {"post": {
+        "url": "/createFund",
+        "json": {"name":"{{{name}}}", "symbol":"{{{symbol}}}", "initial_value":"{{{initial_value}}}"},
+        "match":{
+          "json":"$.message",
+          "value":"The fund was successfully created"
+           }
+         }
+       }
+     ]
+    }
+  ]
+}
