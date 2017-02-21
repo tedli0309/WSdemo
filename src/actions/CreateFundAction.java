@@ -40,15 +40,16 @@ public class CreateFundAction {
 	@Consumes(MediaType.APPLICATION_JSON) 
 	@Produces(MediaType.APPLICATION_JSON)
 	public ObjectNode createFund(CreateFundForm fundForm)  {
+		HttpSession session = request.getSession();
+		ObjectMapper mapper = new ObjectMapper();
+        ObjectNode root = mapper.createObjectNode();
 		try{
 			//ConnectionPool pool = new ConnectionPool("com.mysql.jdbc.Driver", "jdbc:mysql:///test?useSSL=false");
 			//FundDAO fundDAO  = new FundDAO(pool, "task8_fund");
 			Transaction.begin();
 			FundDAO fundDAO = Model.getFundDAO();
 	        
-			HttpSession session = request.getSession();
-			ObjectMapper mapper = new ObjectMapper();
-	        ObjectNode root = mapper.createObjectNode();
+			
 			if (session.getAttribute("employee") == null) {
 				if(session.getAttribute("customer") != null) {
 					root.put("message", "You must be an employee to perform this action");
@@ -83,7 +84,8 @@ public class CreateFundAction {
 			return root;
 		}catch(RollbackException e){
 			e.printStackTrace();
-			return null;
+			root.put("message", "The input you provided is not valid");
+			return root;
 		}finally{
 			if(Transaction.isActive())Transaction.rollback();
 		}

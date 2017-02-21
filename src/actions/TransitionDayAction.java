@@ -34,9 +34,10 @@ public class TransitionDayAction {
 	@Consumes(MediaType.APPLICATION_JSON) 
 	@Produces(MediaType.APPLICATION_JSON)
 	public ObjectNode createFund(CreateFundForm fundForm){
+		ObjectMapper mapper = new ObjectMapper();
+        ObjectNode root = mapper.createObjectNode();
 		try{
-			ObjectMapper mapper = new ObjectMapper();
-	        ObjectNode root = mapper.createObjectNode();
+			
 	        
 	        //ConnectionPool pool = new ConnectionPool("com.mysql.jdbc.Driver", "jdbc:mysql:///test?useSSL=false");
 			//FundDAO fundDAO  = new FundDAO(pool, "task8_fund");
@@ -73,7 +74,8 @@ public class TransitionDayAction {
 			return root;
 		}catch(Exception e) {
 			e.printStackTrace();
-			return null;
+			root.put("message", "The input you provided is not valid");
+			return root;
 		}finally{
 			if(Transaction.isActive())Transaction.rollback();
 		}

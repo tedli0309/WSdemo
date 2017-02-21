@@ -100,10 +100,11 @@ public class ViewPortfolio {
 			Transaction.commit();
 			return root;
 		}  catch (RollbackException e2){
-			System.out.println("transaction error message in view Portfolio");
+			root.put("message", "You don't have any funds in your Portfolio");
+			return root;
 		} finally {
 			if (Transaction.isActive()) Transaction.rollback();
 		}
-		return null;	
+			
 	}
 }

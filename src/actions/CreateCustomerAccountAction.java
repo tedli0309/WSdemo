@@ -91,8 +91,11 @@ public class CreateCustomerAccountAction{
         	System.out.println("roll back exception for create customer!");
         	root.put("message", "The input you provided is not valid");
         	
+		}finally {
+			if (Transaction.isActive()) Transaction.rollback();
 		}
-        return root;
+        root.put("message", "The input you provided is not valid");
+		return root;
 
 	}
 }

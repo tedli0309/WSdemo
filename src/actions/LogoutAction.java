@@ -30,14 +30,19 @@ public class LogoutAction {
 	public ObjectNode logout()  {
 		HttpSession session = request.getSession();
 		ObjectMapper mapper = new ObjectMapper();
-	    ObjectNode root = mapper.createObjectNode();  
-		if (session.getAttribute("customer") != null || session.getAttribute("employee") != null) {
-			 root.put("message", "You have been successfully logged out");
-		} else {
-			root.put("message", "You are not currently logged in");
-		}
-		session.invalidate();
-		return root; 
+	    ObjectNode root = mapper.createObjectNode();
+	    try{
+			if (session.getAttribute("customer") != null || session.getAttribute("employee") != null) {
+				 root.put("message", "You have been successfully logged out");
+			} else {
+				root.put("message", "You are not currently logged in");
+			}
+			session.invalidate();
+			return root; 
+	    } catch(Exception e) {
+	    	root.put("message", "You are not currently logged in");
+	    	return root;
+	    }
 	}
 }
 

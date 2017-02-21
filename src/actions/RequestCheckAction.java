@@ -81,8 +81,8 @@ public class RequestCheckAction {
 			Transaction.commit();
 			return root;
 		}catch (RollbackException e) {
-			//root.put("message", "You don't have sufficient funds in your account to cover the requested check");
-			return null;
+			root.put("message", "The input you provided is not valid");
+			return root;
 		}finally {
 			if (Transaction.isActive()) Transaction.rollback();
 		}
