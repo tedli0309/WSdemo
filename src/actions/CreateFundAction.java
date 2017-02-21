@@ -77,7 +77,7 @@ public class CreateFundAction {
 		FundBean bean = new FundBean(fundForm.getName(), fundForm.getSymbol(), fundForm.getInitial_value());
 		fundDAO.create(bean);
 		
-		root.put("message", "Fund successfully created");
+		root.put("message", "The fund was successfully created");
 		
 		Transaction.commit();
 		return root;

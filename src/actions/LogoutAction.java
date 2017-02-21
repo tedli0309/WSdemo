@@ -27,7 +27,7 @@ public class LogoutAction {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON) 
 	@Produces(MediaType.APPLICATION_JSON)
-	public ObjectNode logout() throws DAOException, RollbackException {
+	public ObjectNode logout()  {
 		HttpSession session = request.getSession();
 		ObjectMapper mapper = new ObjectMapper();
 	    ObjectNode root = mapper.createObjectNode();  

@@ -76,6 +76,7 @@ public class createCustomerAccountAction{
                       
             Transaction.commit();
             root.put("message", newUser.getFirstName() + " was registered succesfully");
+
             return root;
         } catch (DuplicateKeyException e) {
         	root.put("message", "The input you provided is not valid");
