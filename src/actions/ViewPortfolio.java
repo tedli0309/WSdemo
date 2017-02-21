@@ -3,8 +3,6 @@ package actions;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -68,7 +66,7 @@ public class ViewPortfolio {
 			UserDAO userDAO = Model.getUserDAO();
 			user = userDAO.read(user.getUserId());
 			fundsOfOwener2 = fundPositionViewDAO.getFundPosition();			
-			Transaction.commit();
+			//Transaction.commit();
 			List<OwnerFundsBean> ans2= new ArrayList<>();
 	        for(OwnerFundsBean fo: fundsOfOwener2) {
 	        	System.out.println(fo.toString());
@@ -77,6 +75,7 @@ public class ViewPortfolio {
 	        }			
 	        if (ans2.size() == 0) {
 	        	root.put("message", "You don't have any funds in your Portfolio");
+	        	//Transaction.commit();
 	        	return root;
 	        }
 	        DecimalFormat df = new DecimalFormat("##0.00");
@@ -98,10 +97,10 @@ public class ViewPortfolio {
 				fundsNode.add(curFund);			 
 	        }
 	        root.set("funds", fundsNode);
-			
+			Transaction.commit();
 			return root;
 		}  catch (RollbackException e2){
-			System.out.println("transaction error message");			
+			System.out.println("transaction error message in view Portfolio");
 		} finally {
 			if (Transaction.isActive()) Transaction.rollback();
 		}
