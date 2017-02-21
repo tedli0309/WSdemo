@@ -36,34 +36,36 @@ public class DepositCheckAction {
 		
 		//ConnectionPool pool = new ConnectionPool("com.mysql.jdbc.Driver", "jdbc:mysql:///test?useSSL=false");
 		//UserDAO userDAO  = new UserDAO(pool, "task8_user");
-		UserDAO userDAO = Model.getUserDAO();
-		HttpSession session = request.getSession();
-		ObjectMapper mapper = new ObjectMapper();
-        ObjectNode root = mapper.createObjectNode();  
-	    if (session.getAttribute("employee") == null) {
-			if(session.getAttribute("customer") != null) {
-				root.put("message", "You must be an employee to perform this action");
-			} else {
-				root.put("message", "You are not currently logged in");
-			}
-			return root;
-		}
-	    
-	    List<String> errors = checkForm.getValidationErrors();
-	 
-		for(String s :errors){
-			System.out.println(s);
-		}
-		
-		if(errors.size() !=0) {
-			root.put("message", "The input you provided is not valid");
-			return root;
-		}
-		
-		
 		
 		try {
 			Transaction.begin();
+			UserDAO userDAO = Model.getUserDAO();
+			HttpSession session = request.getSession();
+			ObjectMapper mapper = new ObjectMapper();
+	        ObjectNode root = mapper.createObjectNode();  
+		    if (session.getAttribute("employee") == null) {
+				if(session.getAttribute("customer") != null) {
+					root.put("message", "You must be an employee to perform this action");
+				} else {
+					root.put("message", "You are not currently logged in");
+				}
+				return root;
+			}
+		    
+		    List<String> errors = checkForm.getValidationErrors();
+		 
+			for(String s :errors){
+				System.out.println(s);
+			}
+			
+			if(errors.size() !=0) {
+				root.put("message", "The input you provided is not valid");
+				return root;
+			}
+		
+		
+		
+		
 			UserBean[] userList =  userDAO.match((MatchArg.equals("userName",checkForm.getUserName())));
 			if(userList.length == 0) {
 				root.put("message", "The input you provided is not valid");

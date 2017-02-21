@@ -58,12 +58,13 @@ public class BuyFundAction {
 		try {
 			//ConnectionPool pool = new ConnectionPool("com.mysql.jdbc.Driver", "jdbc:mysql:///test?useSSL=false");
 			//TransactionDAO transactionDAO = new TransactionDAO(pool, "task8_transaction");
+			Transaction.begin();
 			PositionDAO positionDAO = Model.getPositionDAO();
 			UserDAO userDAO = Model.getUserDAO();
 			FundDAO fundDAO = Model.getFundDAO();
 			
 			
-			Transaction.begin();
+			
 			UserBean customer = (UserBean)session.getAttribute("customer");
 			UserBean user = userDAO.read(customer.getUserId());
 			FundBean fund = fundDAO.getFundBySymbol(buyForm.getSymbol());

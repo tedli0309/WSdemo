@@ -69,8 +69,9 @@ public class CreateCustomerAccountAction{
         newUser.setCash(Double.parseDouble(form.getCash()));
         try {
     		//ConnectionPool pool = new ConnectionPool("com.mysql.jdbc.Driver", "jdbc:mysql:///test?useSSL=false");
-    		UserDAO userDAO  = Model.getUserDAO();
-    		Transaction.begin();
+        	Transaction.begin();
+        	UserDAO userDAO  = Model.getUserDAO();
+    		
     		
     		UserBean[] u =	userDAO.match(MatchArg.equals("userName",newUser.getUserName()));
 			if (u.length > 0) throw new DuplicateKeyException("this UserName has been used!");
