@@ -79,7 +79,7 @@ public class LoginAction {
 	        } else	if (!res[0].getPassword().equals(loginForm.getPassword())){
 	            errors.add("Incorrect password");
 	            root.put("message", "There seems to be an issue with the username/password combination that you entered");
-	            Transaction.commit();
+	           //Transaction.commit();
 	            return root;
 	        }	
 	        UserBean user = res[0];
