@@ -35,7 +35,7 @@ public class CreateCustomerAccountAction{
 	@Consumes(MediaType.APPLICATION_JSON) 
 	@Produces(MediaType.APPLICATION_JSON)
 	public ObjectNode createAccount(CustomerRegisterForm form) {
-		System.out.println("entered the createCustomerAccount");
+		//System.out.println("entered the createCustomerAccount");
 		HttpSession session = request.getSession();
 		ObjectMapper mapper = new ObjectMapper();
 	    ObjectNode root = mapper.createObjectNode();  
@@ -85,8 +85,7 @@ public class CreateCustomerAccountAction{
             }          
             return root;
         //} catch (DuplicateKeyException e) {
-        	//root.put("message", "The input you provided is not valid");
-        
+        	//root.put("message", "The input you provided is not valid");    
         } catch (RollbackException e) {
         	System.out.println("roll back exception for create customer!");
         	root.put("message", "The input you provided is not valid");
