@@ -1,12 +1,8 @@
 {
   "config": {
-    "http": {
-		"pool":2000
-	},
-	
     "target": "http://localhost:8080/WSdemo",
     "phases": [
-      {"duration": 60, "arrivalRate": 5000}
+      {"duration": 10, "arrivalCount": 7}
     ],
     "payload": [
     {
@@ -25,7 +21,7 @@
     {
       "name": "web service task sample test plan",
       "flow": [
-        {"post": {
+      {"post": {
           "url": "/login",
           "json": {"username":"jadmin","password":"admin"},
           "match":{
@@ -34,14 +30,15 @@
              }
            }
          },
-       {"post": {
-            "url": "/logout",
-            "match":{
-              "json":"$.message",
-              "value":"You have been successfully logged out"
-            }
+		 {"post": {
+        "url": "/createFund",
+        "json": {"name":"{{{name}}}", "symbol":"{{{symbol}}}", "initial_value":"{{{initial_value}}}"},
+        "match":{
+          "json":"$.message",
+          "value":"The fund was successfully created"
            }
          }
+       }
      ]
     }
   ]

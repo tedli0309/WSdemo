@@ -16,6 +16,7 @@ import model.UserDAO;
 
 import org.genericdao.ConnectionPool;
 import org.genericdao.DAOException;
+import org.genericdao.MatchArg;
 import org.genericdao.RollbackException;
 import org.genericdao.Transaction;
 
@@ -58,6 +59,7 @@ public class SellFundAction {
 		}
 		
 		try {
+			Transaction.begin();
 			//ConnectionPool pool = new ConnectionPool("com.mysql.jdbc.Driver", "jdbc:mysql:///test?useSSL=false");
 			TransactionDAO transactionDAO = Model.getTransactionDAO();
 			PositionDAO positionDAO = Model.getPositionDAO();
@@ -65,9 +67,10 @@ public class SellFundAction {
 			FundDAO fundDAO = Model.getFundDAO();
 			
 			
-			Transaction.begin();
+			
 			UserBean customer = (UserBean)session.getAttribute("customer");
 			UserBean user = userDAO.read(customer.getUserId());
+			
 			FundBean fund = fundDAO.getFundBySymbol(sellForm.getSymbol());
 			if(fund == null) {
 				root.put("message", "The input you provided is not valid");
@@ -78,8 +81,10 @@ public class SellFundAction {
 			double price = Double.parseDouble(fund.getPrice());
 			PositionBean position = positionDAO.getPosition(user.getUserId(), fund.getFundId());
 			if(position == null) {
-				position = new PositionBean(user.getUserId(), fund.getFundId(), 0);
-				positionDAO.create(position);
+				//position = new PositionBean(user.getUserId(), fund.getFundId(), 0);
+				//positionDAO.create(position);
+				root.put("message", "You don't have that many shares in your portfolio");
+				return root;
 			}
 			
 			if(position.getShares() < share) {
@@ -92,7 +97,8 @@ public class SellFundAction {
 			
 			positionDAO.update(position);
 			if(position.getShares() == 0) {
-				positionDAO.delete(position.getUserId(), position.getFundId());
+				if(positionDAO.read(position.getUserId(), position.getFundId()) != null)
+					positionDAO.delete( position.getFundId(), position.getUserId());
 			}
 			userDAO.update(user);
 			//transactionDAO.create(new TransactionBean(user.getUserId(), fund.getFundId(), System.currentTimeMillis(), amount/price ,"buy",amount));

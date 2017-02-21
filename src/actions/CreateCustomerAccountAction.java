@@ -72,10 +72,12 @@ public class CreateCustomerAccountAction{
     		UserDAO userDAO  = Model.getUserDAO();
     		Transaction.begin();
     		
+    		UserBean[] u =	userDAO.match(MatchArg.equals("userName",newUser.getUserName()));
+			if (u.length > 0) throw new DuplicateKeyException("this UserName has been used!");
             userDAO.create(newUser);            
                       
             Transaction.commit();
-            root.put("message", newUser.getFirstName() + " was registered succesfully");
+            root.put("message", newUser.getFirstName() + " was registered successfully");
 
             return root;
         } catch (DuplicateKeyException e) {

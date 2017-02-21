@@ -2,7 +2,7 @@
   "config": {
     "target": "http://localhost:8080/WSdemo",
     "phases": [
-      {"duration": 10, "arrivalCount": 1}
+      {"duration": 30, "arrivalRate": 30}
     ],
     "payload": [
     {
@@ -102,7 +102,7 @@
        },
 	   {"post": {
         "url": "/requestCheck",
-        "json": {"cashValue":"1"},
+        "json": {"cashValue":"1000000000000"},
         "match":{
           "json":"$.message",
           "value":"You are not currently logged in"
@@ -222,15 +222,6 @@
         "json": {"name":"{{{name}}}", "symbol":"{{{symbol}}}", "initial_value":"{{{initial_value}}}"},
         "match":{
           "json":"$.message",
-          "value":"The fund was successfully created"
-           }
-         }
-       },
-	   {"post": {
-        "url": "/createFund",
-        "json": {"name":"{{{name}}}", "symbol":"{{{symbol}}}", "initial_value":"{{{initial_value}}}"},
-        "match":{
-          "json":"$.message",
           "value":"The input you provided is not valid"
            }
          }
@@ -316,7 +307,7 @@
        },
 	   {"post": {
         "url": "/buyFund",
-        "json": {"symbol":"{{{symbol}}}", "cashValue":"300"},
+        "json": {"symbol":"{{{symbol}}}", "cashValue":"200"},
         "match":{
           "json":"$.message",
           "value":"The fund has been successfully purchased"
@@ -361,7 +352,7 @@
        },
 	   {"post": {
         "url": "/sellFund",
-        "json": {"symbol":"{{{symbol}}}", "numShares":"2"},
+        "json": {"symbol":"{{{symbol}}}", "numShares":"1"},
         "match":{
           "json":"$.message",
           "value":"The shares have been successfully sold"
@@ -409,7 +400,7 @@
         "json": {"cashValue":"1000000000000"},
         "match":{
           "json":"$.message",
-          "value":"You don't have requested funds in your account to cover the requested check"
+          "value":"You don't have sufficient funds in your account to cover the requested check"
            }
          }
        }

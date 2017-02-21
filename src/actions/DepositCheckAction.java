@@ -61,13 +61,14 @@ public class DepositCheckAction {
 		}
 		
 		
-		UserBean[] userList =  userDAO.match((MatchArg.equals("userName",checkForm.getUserName())));
-		if(userList.length == 0) {
-			root.put("message", "The input you provided is not valid");
-			return root;
-		}
+		
 		try {
 			Transaction.begin();
+			UserBean[] userList =  userDAO.match((MatchArg.equals("userName",checkForm.getUserName())));
+			if(userList.length == 0) {
+				root.put("message", "The input you provided is not valid");
+				return root;
+			}
 			UserBean customer = userList[0];
 			double currentCash = customer.getCash();
 			double updateCash = currentCash + Double.parseDouble(checkForm.getCheckAmount());

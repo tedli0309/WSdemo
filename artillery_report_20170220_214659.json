@@ -1,0 +1,201 @@
+{
+  "aggregate": {
+    "timestamp": "2017-02-21T02:46:20.365Z",
+    "scenariosCreated": 7,
+    "scenariosCompleted": 7,
+    "requestsCompleted": 14,
+    "latency": {
+      "min": 3.8,
+      "max": 176.4,
+      "median": 36.3,
+      "p95": 171,
+      "p99": null
+    },
+    "rps": {
+      "count": 14,
+      "mean": 1.55
+    },
+    "scenarioDuration": {
+      "min": 71,
+      "max": 191.9,
+      "median": 128.4,
+      "p95": null,
+      "p99": null
+    },
+    "scenarioCounts": {
+      "web service task sample test plan": 7
+    },
+    "errors": {},
+    "codes": {
+      "200": 14
+    },
+    "matches": 14,
+    "customStats": {},
+    "phases": [
+      {
+        "duration": 10,
+        "arrivalCount": 7
+      }
+    ]
+  },
+  "intermediate": [
+    {
+      "timestamp": "2017-02-21T02:46:18.166Z",
+      "scenariosCreated": 5,
+      "scenariosCompleted": 5,
+      "requestsCompleted": 10,
+      "latency": {
+        "min": 4.8,
+        "max": 176.4,
+        "median": 54.2,
+        "p95": 176.4,
+        "p99": null
+      },
+      "rps": {
+        "count": 10,
+        "mean": 1.46
+      },
+      "scenarioDuration": {
+        "min": 101.4,
+        "max": 191.9,
+        "median": 163.1,
+        "p95": null,
+        "p99": null
+      },
+      "scenarioCounts": {
+        "web service task sample test plan": 5
+      },
+      "errors": {},
+      "codes": {
+        "200": 10
+      },
+      "matches": 10,
+      "latencies": [
+        [
+          1487645171328,
+          "01e854ea-87a3-4d73-9a2c-22cd1d9b2e18",
+          18248856,
+          200
+        ],
+        [
+          1487645171447,
+          "01e854ea-87a3-4d73-9a2c-22cd1d9b2e18",
+          101240519,
+          200
+        ],
+        [
+          1487645172717,
+          "86aa7103-bc64-4e45-b6dc-18022e288beb",
+          5920343,
+          200
+        ],
+        [
+          1487645172833,
+          "86aa7103-bc64-4e45-b6dc-18022e288beb",
+          111697417,
+          200
+        ],
+        [
+          1487645174144,
+          "d3311678-b0cd-4d00-8e29-7a86dd08fc57",
+          6077920,
+          200
+        ],
+        [
+          1487645174322,
+          "d3311678-b0cd-4d00-8e29-7a86dd08fc57",
+          176419696,
+          200
+        ],
+        [
+          1487645175570,
+          "713f8124-ed27-4829-a92f-8693537a45f0",
+          5841856,
+          200
+        ],
+        [
+          1487645175722,
+          "713f8124-ed27-4829-a92f-8693537a45f0",
+          149357341,
+          200
+        ],
+        [
+          1487645176997,
+          "97782bf9-e7b3-4fe2-8aa4-4fb4f91d0b58",
+          4832995,
+          200
+        ],
+        [
+          1487645177089,
+          "97782bf9-e7b3-4fe2-8aa4-4fb4f91d0b58",
+          90211270,
+          200
+        ]
+      ],
+      "customStats": {},
+      "concurrency": 0,
+      "pendingRequests": 0
+    },
+    {
+      "timestamp": "2017-02-21T02:46:20.358Z",
+      "scenariosCreated": 2,
+      "scenariosCompleted": 2,
+      "requestsCompleted": 4,
+      "latency": {
+        "min": 3.8,
+        "max": 94.9,
+        "median": 30.2,
+        "p95": null,
+        "p99": null
+      },
+      "rps": {
+        "count": 4,
+        "mean": 2.06
+      },
+      "scenarioDuration": {
+        "min": 71,
+        "max": 111.3,
+        "median": 91.2,
+        "p95": null,
+        "p99": null
+      },
+      "scenarioCounts": {
+        "web service task sample test plan": 2
+      },
+      "errors": {},
+      "codes": {
+        "200": 4
+      },
+      "matches": 4,
+      "latencies": [
+        [
+          1487645178425,
+          "fe8b56e0-8103-4eb8-a00c-17d02b711156",
+          6112938,
+          200
+        ],
+        [
+          1487645178526,
+          "fe8b56e0-8103-4eb8-a00c-17d02b711156",
+          94943438,
+          200
+        ],
+        [
+          1487645179853,
+          "7180a2ec-77e1-444e-a8ba-5581634e85fe",
+          3767985,
+          200
+        ],
+        [
+          1487645179911,
+          "7180a2ec-77e1-444e-a8ba-5581634e85fe",
+          54305229,
+          200
+        ]
+      ],
+      "customStats": {},
+      "concurrency": 1,
+      "pendingRequests": 1
+    }
+  ]
+}

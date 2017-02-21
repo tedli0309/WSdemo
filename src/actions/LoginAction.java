@@ -16,7 +16,9 @@ import javax.ws.rs.core.MediaType;
 
 import org.genericdao.ConnectionPool;
 import org.genericdao.DAOException;
+import org.genericdao.MatchArg;
 import org.genericdao.RollbackException;
+import org.genericdao.Transaction;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -36,53 +38,68 @@ public class LoginAction {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON) 
 	@Produces(MediaType.APPLICATION_JSON)
-	public ObjectNode login(LoginForm loginForm) throws DAOException, RollbackException {
+	public ObjectNode login(LoginForm loginForm) throws DAOException{
 		HttpSession session = request.getSession();
 		session.setAttribute("customer", null); 
 		session.setAttribute("employee", null);  
 		System.out.println(loginForm.toString());
 		//ConnectionPool pool = new ConnectionPool("com.mysql.jdbc.Driver", "jdbc:mysql:///test?useSSL=false");
 		//UserDAO userDAO  = new UserDAO(pool, "task8_user");
-		UserDAO userDAO = Model.getUserDAO();
-		ObjectMapper mapper = new ObjectMapper();
-	    ObjectNode root = mapper.createObjectNode();  
-		List<String> errors = loginForm.getValidationErrors();
-		if (errors.size() != 0)	{
-			root.put("message", "There seems to be an issue with the username/password combination that you entered");
-			return root;
-		}
+		try {
+			Transaction.begin();
 		
-		if (loginForm.getUserName().equals("jadmin")) {
-				if (loginForm.getPassword().equals("admin")) {
-					session.setAttribute("employee", "admin");
-		        	session.setMaxInactiveInterval(15 * 60);
-		        	root.put("message", "Welcome Jane");
-				} else {
-					root.put("message", "There seems to be an issue with the username/password combination that you entered");
-				}
+			UserDAO userDAO = Model.getUserDAO();
+			ObjectMapper mapper = new ObjectMapper();
+		    ObjectNode root = mapper.createObjectNode();  
+			List<String> errors = loginForm.getValidationErrors();
+			if (errors.size() != 0)	{
+				root.put("message", "There seems to be an issue with the username/password combination that you entered");
 				return root;
+			}
+			
+			if (loginForm.getUserName().equals("jadmin")) {
+					if (loginForm.getPassword().equals("admin")) {
+						session.setAttribute("employee", "admin");
+			        	session.setMaxInactiveInterval(15 * 60);
+			        	root.put("message", "Welcome Jane");
+					} else {
+						root.put("message", "There seems to be an issue with the username/password combination that you entered");
+					}
+					return root;
+			}
+			UserBean[] res =  userDAO.match(MatchArg.equals("userName",loginForm.getUserName()));
+			//if (res.length == 0)  return null;
+			
+			      
+	        if (res.length == 0) {
+	            errors.add("User not found");
+	            root.put("message", "There seems to be an issue with the username/password combination that you entered");
+	            return root;
+	        } else	if (!res[0].getPassword().equals(loginForm.getPassword())){
+	            errors.add("Incorrect password");
+	            root.put("message", "There seems to be an issue with the username/password combination that you entered");
+	            return root;
+	        }	
+	        UserBean user = res[0];
+	       
+	        if (errors.size() == 0) {
+	        	root.put("message", "Welcome " + user.getFirstName());
+	        	session.setAttribute("customer", user);
+	        	session.setMaxInactiveInterval(15 * 60); //Specifies the time, in seconds, between client requests before the servlet
+	        											 //container will invalidate this session.
+	        } else {
+	        	
+	        	for (String error : errors)  System.out.println(error); 
+	        	root.put("message", "There seems to be an issue with the username/password combination that you entered");
+	        }
+	        Transaction.commit();
+	        return root;
+		} catch (RollbackException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			if(Transaction.isActive())Transaction.rollback();
 		}
-		
-		
-		UserBean user = userDAO.read(loginForm.getUserName());      
-        if (user == null) {
-            errors.add("User not found");
-        } else	if (!user.getPassword().equals(loginForm.getPassword())){
-            errors.add("Incorrect password");
-        }	
-        
-       
-        if (errors.size() == 0) {
-        	root.put("message", "Welcome " + user.getFirstName());
-        	session.setAttribute("customer", user);
-        	session.setMaxInactiveInterval(15 * 60); //Specifies the time, in seconds, between client requests before the servlet
-        											 //container will invalidate this session.
-        } else {
-        	
-        	for (String error : errors)  System.out.println(error); 
-        	root.put("message", "There seems to be an issue with the username/password combination that you entered");
-        }
-        return root;
-		 
+		return null;
 	}
 }
