@@ -48,7 +48,7 @@ public class LoginAction {
 		try {
 			
 		
-			UserDAO userDAO = Model.getUserDAO();
+			
 			ObjectMapper mapper = new ObjectMapper();
 		    ObjectNode root = mapper.createObjectNode();  
 			List<String> errors = loginForm.getValidationErrors();
@@ -69,6 +69,7 @@ public class LoginAction {
 			}
 			
 			Transaction.begin();
+			UserDAO userDAO = Model.getUserDAO();
 			UserBean[] res =  userDAO.match(MatchArg.equals("userName",loginForm.getUserName()));
 			//if (res.length == 0)  return null;
 	        if (res.length == 0) {

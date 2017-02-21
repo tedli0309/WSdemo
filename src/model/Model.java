@@ -12,14 +12,14 @@ import databean.UserBean;
 public class Model {
 	 
 	private UserDAO userDAO;
-//	private FundDAO fundDAO;
+	private FundDAO fundDAO;
 //	private EmployeeDAO employeeDAO;
-//	private TransactionDAO  transactionDAO; 
-//	private PositionDAO positionDAO;
+	private TransactionDAO  transactionDAO; 
+	private PositionDAO positionDAO;
 //
 //	private FundPriceHistoryDAO fundPriceHistoryDAO;
 //
-//	private FundPositionViewDAO fundPositionViewDAO;
+	private FundPositionViewDAO fundPositionViewDAO;
 //	private TransactionHistoryViewDAO transactionHistoryViewDAO;
 	
 	public Model(ServletConfig config) throws ServletException {
@@ -31,10 +31,10 @@ public class Model {
 			*/
 			ConnectionPool pool = new ConnectionPool("com.mysql.jdbc.Driver", "jdbc:mysql:///test?useSSL=false");
 			userDAO  = new UserDAO(pool, "task8_user");
-//			fundDAO  = new FundDAO(pool, "task7_fund");
-//			positionDAO = new PositionDAO(pool, "task7_position");
-//			fundPositionViewDAO = new FundPositionViewDAO(pool);
-//			transactionDAO   = new TransactionDAO (pool, "task7_transaction");
+			fundDAO  = new FundDAO(pool, "task8_fund");
+			positionDAO = new PositionDAO(pool, "task8_position");
+			fundPositionViewDAO = new FundPositionViewDAO(pool);
+			transactionDAO   = new TransactionDAO (pool, "task8_transaction");
 //			employeeDAO  = new EmployeeDAO(pool, "task7_employee");
 //			fundPriceHistoryDAO = new FundPriceHistoryDAO(pool, "task7_fundpricehistory"); 
 //			transactionHistoryViewDAO = new TransactionHistoryViewDAO(pool);
@@ -43,13 +43,13 @@ public class Model {
 		}
 	}
 	public UserDAO getUserDAO()  { return userDAO; }
-//	public FundDAO getFundDAO()  { return fundDAO; }
-//	public TransactionDAO getTransactionDAO()  { return transactionDAO; }
+	public FundDAO getFundDAO()  { return fundDAO; }
+	public TransactionDAO getTransactionDAO()  { return transactionDAO; }
 //	public EmployeeDAO getEmployeeDAO()  { return employeeDAO; }
-//	public PositionDAO getPositionDAO()  { return positionDAO; }
+	public PositionDAO getPositionDAO()  { return positionDAO; }
 //
 //	public FundPriceHistoryDAO getFundPriceHistoryDAO()  { return fundPriceHistoryDAO;}
-//	public FundPositionViewDAO getFundPostionViewDAO() { return fundPositionViewDAO;}
+	public FundPositionViewDAO getFundPostionViewDAO() { return fundPositionViewDAO;}
 //	public TransactionHistoryViewDAO getTransactionHistoryViewDAO() {	 
 //		return transactionHistoryViewDAO;
 //	}
