@@ -46,8 +46,7 @@ public class LoginAction {
 		//ConnectionPool pool = new ConnectionPool("com.mysql.jdbc.Driver", "jdbc:mysql:///test?useSSL=false");
 		//UserDAO userDAO  = new UserDAO(pool, "task8_user");
 		try {
-			
-		
+					
 			UserDAO userDAO = Model.getUserDAO();
 			ObjectMapper mapper = new ObjectMapper();
 		    ObjectNode root = mapper.createObjectNode();  
