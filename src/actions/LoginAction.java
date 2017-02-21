@@ -46,7 +46,7 @@ public class LoginAction {
 		//ConnectionPool pool = new ConnectionPool("com.mysql.jdbc.Driver", "jdbc:mysql:///test?useSSL=false");
 		//UserDAO userDAO  = new UserDAO(pool, "task8_user");
 		try {
-			Transaction.begin();
+			
 		
 			UserDAO userDAO = Model.getUserDAO();
 			ObjectMapper mapper = new ObjectMapper();
@@ -56,7 +56,7 @@ public class LoginAction {
 				root.put("message", "There seems to be an issue with the username/password combination that you entered");
 				return root;
 			}
-			
+			// this is for the login of the admin
 			if (loginForm.getUserName().equals("jadmin")) {
 					if (loginForm.getPassword().equals("admin")) {
 						session.setAttribute("employee", "admin");
@@ -67,17 +67,19 @@ public class LoginAction {
 					}
 					return root;
 			}
+			
+			Transaction.begin();
 			UserBean[] res =  userDAO.match(MatchArg.equals("userName",loginForm.getUserName()));
 			//if (res.length == 0)  return null;
-			
-			      
 	        if (res.length == 0) {
 	            errors.add("User not found");
 	            root.put("message", "There seems to be an issue with the username/password combination that you entered");
+	            Transaction.commit();
 	            return root;
 	        } else	if (!res[0].getPassword().equals(loginForm.getPassword())){
 	            errors.add("Incorrect password");
 	            root.put("message", "There seems to be an issue with the username/password combination that you entered");
+	            Transaction.commit();
 	            return root;
 	        }	
 	        UserBean user = res[0];
@@ -88,7 +90,6 @@ public class LoginAction {
 	        	session.setMaxInactiveInterval(15 * 60); //Specifies the time, in seconds, between client requests before the servlet
 	        											 //container will invalidate this session.
 	        } else {
-	        	
 	        	for (String error : errors)  System.out.println(error); 
 	        	root.put("message", "There seems to be an issue with the username/password combination that you entered");
 	        }

@@ -73,18 +73,23 @@ public class CreateCustomerAccountAction{
     		Transaction.begin();
     		
     		UserBean[] u =	userDAO.match(MatchArg.equals("userName",newUser.getUserName()));
-			if (u.length > 0) throw new DuplicateKeyException("this UserName has been used!");
-            userDAO.create(newUser);            
-                      
-            Transaction.commit();
-            root.put("message", newUser.getFirstName() + " was registered successfully");
-
+			//if (u.length > 0) throw new DuplicateKeyException("this UserName has been used!");
+            if (u.length > 0) {
+            	Transaction.commit();
+            	root.put("message", "The input you provided is not valid");
+            } else {
+            	userDAO.create(newUser);            
+            	Transaction.commit();
+            	root.put("message", newUser.getFirstName() + " was registered successfully");
+            }          
             return root;
-        } catch (DuplicateKeyException e) {
-        	root.put("message", "The input you provided is not valid");
+        //} catch (DuplicateKeyException e) {
+        	//root.put("message", "The input you provided is not valid");
+        
         } catch (RollbackException e) {
         	System.out.println("roll back exception for create customer!");
         	root.put("message", "The input you provided is not valid");
+        	
 		}
         return root;
 

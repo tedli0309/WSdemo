@@ -76,6 +76,7 @@ public class ViewPortfolio {
 	        }			
 	        if (ans2.size() == 0) {
 	        	root.put("message", "You don't have any funds in your Portfolio");
+	        	Transaction.commit();
 	        	return root;
 	        }
 	        DecimalFormat df = new DecimalFormat("##0.00");
@@ -100,7 +101,7 @@ public class ViewPortfolio {
 			
 			return root;
 		}  catch (RollbackException e2){
-			System.out.println("transaction error message");			
+			System.out.println("transaction error message in view Portfolio");
 		} finally {
 			if (Transaction.isActive()) Transaction.rollback();
 		}
