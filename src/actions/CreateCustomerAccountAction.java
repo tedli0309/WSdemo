@@ -26,7 +26,7 @@ import formbean.CustomerRegisterForm;
 import model.UserDAO;
 import init.*;
 @Path("/createCustomerAccount")
-public class createCustomerAccountAction{
+public class CreateCustomerAccountAction{
 	@Context 
 	HttpServletRequest request;
 	
