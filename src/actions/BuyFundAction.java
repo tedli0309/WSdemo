@@ -16,6 +16,7 @@ import model.UserDAO;
 
 import org.genericdao.ConnectionPool;
 import org.genericdao.DAOException;
+import org.genericdao.MatchArg;
 import org.genericdao.RollbackException;
 import org.genericdao.Transaction;
 
@@ -67,12 +68,17 @@ public class BuyFundAction {
 			
 			UserBean customer = (UserBean)session.getAttribute("customer");
 			UserBean user = userDAO.read(customer.getUserId());
-			FundBean fund = fundDAO.getFundBySymbol(buyForm.getSymbol());
-			if(fund == null) {
+			FundBean[] res =  fundDAO.match(MatchArg.equals("symbol",buyForm.getSymbol()));
+			if (res.length == 0)  {
 				root.put("message", "The input you provided is not valid");
 				return root;
 			}
-	
+			
+			if(res[0] == null) {
+				root.put("message", "The input you provided is not valid");
+				return root;
+			}
+			FundBean fund = res[0];
 			double amount = Double.parseDouble(buyForm.getCashValue());			
 			double balance = user.getCash();
 			double price = Double.parseDouble(fund.getPrice());

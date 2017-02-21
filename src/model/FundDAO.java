@@ -27,17 +27,16 @@ public class FundDAO extends GenericDAO<FundBean>{
 		}
 	}
 	
-	public FundBean getFundBySymbol(String symbol) throws RollbackException {
+	/*public FundBean getFundBySymbol(String symbol) throws RollbackException {
 		//try	{
 			//.begin();
-			FundBean[] res =  match(MatchArg.equals("symbol",symbol));
-			if (res.length == 0)  return null;
+			
 			//Transaction.commit();
-			return res[0];
+			//return res[0];
 		//} finally {
 			//if (Transaction.isActive()) Transaction.rollback();
 		//}
-	}
+	}*/
 	
 	public FundBean[] getFunds() throws RollbackException {
 		try{

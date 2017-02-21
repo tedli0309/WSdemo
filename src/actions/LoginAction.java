@@ -69,7 +69,7 @@ public class LoginAction {
 			Transaction.begin();
 			UserDAO userDAO = Model.getUserDAO();
 			UserBean[] res =  userDAO.match(MatchArg.equals("userName",loginForm.getUserName()));
-			//if (res.length == 0)  return null;
+			Transaction.commit();
 	        if (res.length == 0) {
 	            errors.add("User not found");
 	            root.put("message", "There seems to be an issue with the username/password combination that you entered");
@@ -92,7 +92,7 @@ public class LoginAction {
 	        	for (String error : errors)  System.out.println(error); 
 	        	root.put("message", "There seems to be an issue with the username/password combination that you entered");
 	        }
-	        Transaction.commit();
+	       
 	        return root;
 		} catch (RollbackException e) {
 			// TODO Auto-generated catch block

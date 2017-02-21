@@ -2,7 +2,7 @@
   "config": {
     "target": "http://localhost:8080/WSdemo",
     "phases": [
-      {"duration": 30, "arrivalRate": 30}
+      {"duration": 60, "arrivalRate": 500}
     ],
     "payload": [
     {

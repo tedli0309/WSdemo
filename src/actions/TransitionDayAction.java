@@ -40,8 +40,7 @@ public class TransitionDayAction {
 	        
 	        //ConnectionPool pool = new ConnectionPool("com.mysql.jdbc.Driver", "jdbc:mysql:///test?useSSL=false");
 			//FundDAO fundDAO  = new FundDAO(pool, "task8_fund");
-	        Transaction.begin();
-	        FundDAO fundDAO = Model.getFundDAO();
+	        
 			double price,seed,value=0;
 			Random rand = new Random();
 			
@@ -54,7 +53,9 @@ public class TransitionDayAction {
 				}
 				return root;
 			}
-			FundBean[] funds = fundDAO.match();
+			Transaction.begin();
+	        FundDAO fundDAO = Model.getFundDAO();
+				FundBean[] funds = fundDAO.match();
 			for(FundBean fund:funds) {
 				value = 0;
 				price = Double.parseDouble(fund.getPrice());

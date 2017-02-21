@@ -71,11 +71,17 @@ public class SellFundAction {
 			UserBean customer = (UserBean)session.getAttribute("customer");
 			UserBean user = userDAO.read(customer.getUserId());
 			
-			FundBean fund = fundDAO.getFundBySymbol(sellForm.getSymbol());
-			if(fund == null) {
+			FundBean[] res =  fundDAO.match(MatchArg.equals("symbol",sellForm.getSymbol()));
+			if (res.length == 0)  {
 				root.put("message", "The input you provided is not valid");
 				return root;
 			}
+			
+			if(res[0] == null) {
+				root.put("message", "The input you provided is not valid");
+				return root;
+			}
+			FundBean fund = res[0];
 	
 			int share = Integer.parseInt(sellForm.getNumShare());			
 			double price = Double.parseDouble(fund.getPrice());

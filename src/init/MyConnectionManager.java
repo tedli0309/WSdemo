@@ -10,7 +10,7 @@ import org.genericdao.DAOException;
 import model.UserDAO;
 
 public class MyConnectionManager implements ServletContextListener {
-	public UserDAO userDAO;
+	//public UserDAO userDAO;
 	@Override
 	public void contextDestroyed(ServletContextEvent arg0) {
 		System.out.println("byebye");
@@ -30,5 +30,5 @@ public class MyConnectionManager implements ServletContextListener {
 		
 	}
 	
-	public UserDAO getUserDAO()  { return userDAO; }
+	//public UserDAO getUserDAO()  { return userDAO; }
 }

@@ -6,7 +6,7 @@
 	
     "target": "http://localhost:8080/WSdemo",
     "phases": [
-      {"duration": 60, "arrivalRate": 5000}
+      {"duration": 10, "arrivalCount": 100}
     ],
     "payload": [
     {
@@ -27,10 +27,10 @@
       "flow": [
         {"post": {
           "url": "/login",
-          "json": {"username":"jadmin","password":"admin"},
+          "json": {"username":"{{{username}}}","password":"{{password}}"},
           "match":{
             "json":"$.message",
-            "value":"Welcome Jane"
+            "value":"Welcome {{{fname}}}"
              }
            }
          },

@@ -7,7 +7,7 @@ import org.genericdao.PrimaryKey;
 
 import databean.FundBean;
 import model.FundDAO;
-import model.Model;;
+//import model.Model;;
 @PrimaryKey("transactionId")
 public class TransactionBean {
 	private int transactionId;
