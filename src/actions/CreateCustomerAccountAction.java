@@ -17,6 +17,7 @@ import org.genericdao.DAOException;
 import org.genericdao.DuplicateKeyException;
 import org.genericdao.MatchArg;
 import org.genericdao.RollbackException;
+import org.genericdao.Transaction;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -33,8 +34,7 @@ public class createCustomerAccountAction{
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON) 
 	@Produces(MediaType.APPLICATION_JSON)
-	public ObjectNode createAccount(CustomerRegisterForm form) 
-			throws RollbackException {
+	public ObjectNode createAccount(CustomerRegisterForm form) {
 		System.out.println("entered the createCustomerAccount");
 		HttpSession session = request.getSession();
 		ObjectMapper mapper = new ObjectMapper();
@@ -70,14 +70,20 @@ public class createCustomerAccountAction{
         try {
     		//ConnectionPool pool = new ConnectionPool("com.mysql.jdbc.Driver", "jdbc:mysql:///test?useSSL=false");
     		UserDAO userDAO  = Model.getUserDAO();
+    		Transaction.begin();
+    		
             userDAO.create(newUser);            
+                      
+            Transaction.commit();
             root.put("message", newUser.getFirstName() + " was registered succesfully");
             return root;
         } catch (DuplicateKeyException e) {
-            root.put("message", "The input you provided is not valid");
-            return root;
-        }
-		
+        	root.put("message", "The input you provided is not valid");
+        } catch (RollbackException e) {
+        	System.out.println("roll back exception for create customer!");
+        	root.put("message", "The input you provided is not valid");
+		}
+        return root;
 
 	}
 }
