@@ -59,12 +59,13 @@ public class ViewPortfolio {
 		
 		//ConnectionPool pool = new ConnectionPool("com.mysql.jdbc.Driver", "jdbc:mysql:///test?useSSL=false");
 		//PositionDAO positionDAO = Model.getPositionDAO();
-		FundPositionViewDAO fundPositionViewDAO = Model.getFundPostionViewDAO();
-		UserDAO userDAO = Model.getUserDAO();
+		
 		OwnerFundsBean[] fundsOfOwener2;
 		
 		try {
 			Transaction.begin();
+			FundPositionViewDAO fundPositionViewDAO = Model.getFundPostionViewDAO();
+			UserDAO userDAO = Model.getUserDAO();
 			user = userDAO.read(user.getUserId());
 			fundsOfOwener2 = fundPositionViewDAO.getFundPosition();			
 			Transaction.commit();

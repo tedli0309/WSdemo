@@ -43,50 +43,50 @@ public class CreateFundAction {
 		try{
 			//ConnectionPool pool = new ConnectionPool("com.mysql.jdbc.Driver", "jdbc:mysql:///test?useSSL=false");
 			//FundDAO fundDAO  = new FundDAO(pool, "task8_fund");
-	        FundDAO fundDAO = Model.getFundDAO();
-		
-		Transaction.begin();
-		HttpSession session = request.getSession();
-		ObjectMapper mapper = new ObjectMapper();
-        ObjectNode root = mapper.createObjectNode();
-		if (session.getAttribute("employee") == null) {
-			if(session.getAttribute("customer") != null) {
-				root.put("message", "You must be an employee to perform this action");
-			} else {
-				root.put("message", "You are not currently logged in");
+			Transaction.begin();
+			FundDAO fundDAO = Model.getFundDAO();
+	        
+			HttpSession session = request.getSession();
+			ObjectMapper mapper = new ObjectMapper();
+	        ObjectNode root = mapper.createObjectNode();
+			if (session.getAttribute("employee") == null) {
+				if(session.getAttribute("customer") != null) {
+					root.put("message", "You must be an employee to perform this action");
+				} else {
+					root.put("message", "You are not currently logged in");
+				}
+				return root;
 			}
+			
+			System.out.println(fundForm.getName());
+			
+			List<String> errors = fundForm.getValidationErrors();
+			FundBean[] fund = fundDAO.match(MatchArg.equals("symbol", fundForm.getSymbol())); 
+			if(fund.length != 0) {
+				errors.add("Already exists");
+			}
+			
+			for(String s :errors){
+				System.out.println(s);
+			}
+			
+			if(errors.size() !=0) {
+				root.put("message", "The input you provided is not valid");
+				return root;
+			}
+			FundBean bean = new FundBean(fundForm.getName(), fundForm.getSymbol(), fundForm.getInitial_value());
+			fundDAO.create(bean);
+			
+			root.put("message", "The fund was successfully created");
+			
+			Transaction.commit();
 			return root;
+		}catch(RollbackException e){
+			e.printStackTrace();
+			return null;
+		}finally{
+			if(Transaction.isActive())Transaction.rollback();
 		}
-		
-		System.out.println(fundForm.getName());
-		
-		List<String> errors = fundForm.getValidationErrors();
-		FundBean[] fund = fundDAO.match(MatchArg.equals("symbol", fundForm.getSymbol())); 
-		if(fund.length != 0) {
-			errors.add("Already exists");
-		}
-		
-		for(String s :errors){
-			System.out.println(s);
-		}
-		
-		if(errors.size() !=0) {
-			root.put("message", "The input you provided is not valid");
-			return root;
-		}
-		FundBean bean = new FundBean(fundForm.getName(), fundForm.getSymbol(), fundForm.getInitial_value());
-		fundDAO.create(bean);
-		
-		root.put("message", "The fund was successfully created");
-		
-		Transaction.commit();
-		return root;
-	}catch(RollbackException e){
-		e.printStackTrace();
-		return null;
-	}finally{
-		if(Transaction.isActive())Transaction.rollback();
-	}
 		
 		
 	}
