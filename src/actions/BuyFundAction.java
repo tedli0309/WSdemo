@@ -115,7 +115,7 @@ public class BuyFundAction {
 			if (Transaction.isActive()) Transaction.rollback();
 		}
 		
-		//root.put("message", "exception");
+		root.put("message", "The input you provided is not valid");
 		return root;
 	}
 }

@@ -45,10 +45,10 @@ public class LoginAction {
 		System.out.println(loginForm.toString());
 		//ConnectionPool pool = new ConnectionPool("com.mysql.jdbc.Driver", "jdbc:mysql:///test?useSSL=false");
 		//UserDAO userDAO  = new UserDAO(pool, "task8_user");
+		ObjectMapper mapper = new ObjectMapper();
+	    ObjectNode root = mapper.createObjectNode();
 		try {
 
-			ObjectMapper mapper = new ObjectMapper();
-		    ObjectNode root = mapper.createObjectNode();  
 			List<String> errors = loginForm.getValidationErrors();
 			if (errors.size() != 0)	{
 				root.put("message", "There seems to be an issue with the username/password combination that you entered");
@@ -100,6 +100,7 @@ public class LoginAction {
 		} finally{
 			if(Transaction.isActive())Transaction.rollback();
 		}
-		return null;
+		root.put("message", "The input you provided is not valid");
+		return root;
 	}
 }
