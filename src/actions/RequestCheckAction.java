@@ -69,7 +69,7 @@ public class RequestCheckAction {
 			UserBean user = userDAO.read(customer.getUserId());
 			double currentCash = user.getCash();
 			if (currentCash < requestAmount) {
-				root.put("message", "You don't have sufficient funds in your account to cover the requested check");
+				root.put("message", "You don’t have sufficient funds in your account to cover the requested check");
 				return root;
 			}
 			double updateCash = currentCash - requestAmount;
